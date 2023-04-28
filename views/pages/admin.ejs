@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('../partials/head'); %>
+  <style>
+  .input-group-append {
+    cursor: pointer;
+  }
+  
+  .btnDay {
+    border-radius: 50%;
+    width: 80%;
+    height: 100%;
+  }
+
+
+
+
+  
+  /* .btn-check:checked {
+    outline: none !important;
+    box-shadow: none;
+    color:red!important;
+} */
+
+  </style>
+  <link rel="stylesheet" href="css/admin.css">
+  <script src="./js/admin.js"></script>
+</head>
+
+<body class="container" style="background-color: #faf8f6;">
+  <main>
+    <div class="p-5 rounded" style="background-color: #ffffff;" >
+      <nav class="row">
+        <a class="nav-link active" aria-current="page" href="/">Home</a>
+      </nav>
+      <h1>Панель администратора</h1>
+      <div class="p-1"></div>
+      <h2><span style="background-color: #f6f6f6;  color:#56463c"> Добавить новое занятие </span></h2>
+      <div class="p-2"></div>
+
+      <form class="col-12" id='addLessonForm' onsubmit="return false;">
+
+        <div class="col-xl-6 col-lg-8 col-12">
+          <div class="row">
+            <div class="col-lg-6 col-sm-12">
+              <select class="form-select" id="hall" name="hall">
+                <option selected disabled>Зал</option>
+                <%halls.forEach(function(hall) { %>
+                    <option value=<%= hall.id %>><%= hall.capacity %></option>
+                  <%})%>
+              </select>
+            </div>
+            <div class="col-lg-6 col-sm-12">            
+              <select class="form-select tpLessons" id="tpLessons" name="tp_lesson" onchange="addTeachers('addTeachers', 'tpLessons')">
+                <option selected disabled>Тип занятия</option>
+                <%tp_lessons.forEach(function(tp_lesson) { %>
+                    <option value=<%= tp_lesson.id %>><%= tp_lesson.name%></option>
+                  <%})%>
+              </select>
+            </div>
+          </div>
+
+
+          <div class="p-2"></div>
+          <select disabled class="form-select addTeachers" name="teacher">
+            <option selected disabled>Преподаватель</option>        
+          </select>
+          <div class="p-3"></div>
+          
+          <div class="row">
+            <div class="container col-lg-6 col-s-12">
+              <div class="form-floating">
+                <input type="date" class="form-control col" id="dt_start" 
+                  placeholder="dt_start" name="dtStart" >
+                <label for="dt_start">Дата начала</label>
+              </div>
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+              </span>
+            </div>
+
+          
+            <div class="container col-lg-6 col-s-12">
+              <div class="form-floating">
+                <input type="text" class="form-control col" id="reAmount" placeholder="reAmount" name="reAmount" disabled>
+                <label for="reAmount">Количество</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="p-3"></div>
+          <%# style="height: 2rem;" %>
+          <div class="row weekDays" >
+            
+            <%/* all buttons */ %>
+            <% for(i = 0; i < 7;i ++){ %>
+              <div class="container col" id="btnDayOfWeek">
+                <input type="checkbox" name="dayOfWeek[]" class="btn-check" id="<%= daysOfWeek[i] %>" value="<%= btnValue[i] %>" autocomplete="off" disabled >
+                <label class="btn btnDay btn-outline-primary p-2" for="<%= daysOfWeek[i] %>" onclick="event.stopPropagation()"><%= daysOfWeekShort[i] %></label><br>
+              </div>
+            <%}%>
+            <%# <div class="p-3"></div> %>
+          </div>
+          
+          
+          <div class="p-3"></div>
+          <div class="row weekDaysTime">
+            <div class="container col addWeekDaysTime">
+              <div class="row">
+                <div class="col-lg-2 pt-xxl-2">По <span style="color: #AB9384	;" class="timeForFirstRep"> ___ </span> в</div>
+                <div class="col-lg-3">
+                  <input type="text" name="timeOfDay[]" class="form-control timeMask" id="timeOnDayOfTheWeek" disabled >
+                </div>  
+              </div>  
+              <%/*
+              <div class="row pt-2">
+                <div class="col-lg-2">По <span style="color: #AB9384	;">ВТ</span> в</div>
+                <div class="col-lg-3">
+                  <input type="text" name="timeOfDay[]" class="form-control timeMask" >
+                </div>  
+              </div> 
+               */%> 
+
+            </div>
+            
+          </div>
+          
+        
+          
+          
+          <div class="p-3"></div>
+          
+          <div class="row">
+          <div class="col-lg-5 col-s-12">
+            <label for="level" class="form-label">Уровень сложности</label>
+          </div>
+          <div class="col-lg-7 col-s-12" >
+            <div class="row">
+              <input type="range" name="level" value="0" class="form-range" min="0" max="5" step="1" id="level">
+            </div>
+            <div class="row" style="white-space: nowrap;">
+              <div class="col ps-0">0</div>
+              <div class="col"></div>
+              <div class="col">1</div>
+              <div class="col"></div>
+              <div class="col">2</div>
+              <div class="col"></div>              
+              <div class="col">3</div>
+              <div class="col"></div>
+              <div class="col">4</div>
+              <div class="col"></div>
+              <div class="col pe-0">5</div>
+            </div>
+          </div>
+          </div>
+          
+          
+          
+          <div class="p-3"></div>
+          <button type="submit" class="btn btn-primary btnAdminAdd">добавить</button>
+        </div>
+        
+      </form>
+
+      <div class="pt-4"></div>
+      <h2>Список занятий</h2>
+      <div class="p-2"></div>
+
+      <div class="wrap-table100">
+        <div class="table regular1 ">
+          <div class="tableRow header">
+            <% tableLessonHeaders.forEach(function(el){ %>
+            <div class="cell title"><%= el %></div>
+            <% }); %>
+          </div>
+
+          <% lessons.forEach(function(lesson){ %>
+            <div class="tableRow" dateForSystem="<%= lesson.dateForSystem %>" timeForSystem="<%= lesson.timeForSystem %>">
+              <div class="cell" data-title="ID">  <%= lesson.id %>   </div>
+              <div class="cell"  data-title="Дата и время"> <%= lesson.dt %> </div>
+              <div class="cell" data-title="Зал"> <%= lesson.hall %></div>
+              <div class="cell" data-title="Тип занятия"><%= lesson.tp_lesson %></div>
+              <div class="cell" data-title="Преподаватель"><%= lesson.full_name %> </div>
+              <div class="cell"  data-title="Удалить">
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+              </div>
+            </div>
+          <% }); %>   
+        </div>
+      </div>
+
+
+      <div class="pt-4"></div>
+      <h2>Добавить нового преподавателя</h2>
+      <div class="p-2"></div>
+
+
+      <form class="col-12" id="addTeacherForm" onsubmit="return false;">
+        <div class="col-6">
+          <input type="file" name="myPicture" class="file">
+          <button type="submit" class="btn btn-primary btnAddTeacher">добавить</button>
+        </div>
+      </form>
+
+
+
+        <!-- элемент input с id = datetimepicker1 -->
+
+
+
+
+
+  </main>
+  
+  <%/* Modal conformation */ %>
+
+  <div class="modal fade" tabindex="-1" id="confirmation" aria-hidden="true"
+      aria-labelledby="your_number">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <img src="/images/warning_icon.png" alt="warining icon"  width="23" height="26" class="pb-1 me-1">
+            Удалить занятие
+          </h5>
+          <button type="button" class="btn-close" id="btnСlose" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="confirmationDeleteModelBody">
+          <p class="ps-3 pe-3">Вы уверены, что хотите удалить занятие </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="btnСlose" data-bs-dismiss="modal">Отмена</button>
+          <button type="button" class="btn btn-danger" id="btnDelLessonAfterConfirmation" >Удалить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<%/* Modal for updating */ %>
+  <div class="modal fade" tabindex="-1" id="updateLesson" aria-hidden="true"
+      aria-labelledby="your_number">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"> 
+            <img src="/images/edit_icon.png" alt="caution icon" width="20" height="25" class="pb-1"> 
+            Изменить занятие
+          </h5>
+          <button type="button" class="btn-close" id="btnСlose" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+
+
+        <form class="col-12" id='updateLessonForm' onsubmit="return false;">
+          <div class="modal-body ms-3 me-3" id="updateLessonModalBody">
+            <div class="ps-3 pe-3">
+              <label for="idLesson" class="">ID</label>
+              <input type="text" name="ID" class="form-control" id="idLesson" readonly>
+            </div>
+            <div class="ps-3 pe-3 pt-3">
+              <div class="row">
+                <div class="col-6">
+                  <label for="lessonDt">Дата</label>
+                  <input type="date" name="dt" class="form-control" id="lessonDt">
+                </div>
+                <div class="col-6">
+                  <label for="idLessonTime">Время</label>
+                  <input type="text" name="time" class="form-control timeMask" id="idLessonTime">
+                </div>
+              </div>
+            </div>
+            <div class="ps-3 pe-3 pt-3">
+              <label for="idLessonHall">Зал</label>
+              <select name="hall" class="form-select" id="idLessonHall" >
+                <%halls.forEach(function(hall) { %>
+                    <option value=<%= hall.id %>><%= hall.capacity %></option>
+                  <%})%>
+              </select>
+            </div>
+            <div class="ps-3 pe-3 pt-3">
+              <label for="idTpLesson">Тип занятия</label>
+              <select class="form-select idtpLessons" id="idTpLesson" name="tp_lesson" onchange="addTeachers('addTeachersModal', 'idtpLessons')">
+                <option selected id="tpLessonFromTable" >_____</option>
+                <%tp_lessons.forEach(function(tp_lesson) { %>
+                    <option value=<%= tp_lesson.id %>><%= tp_lesson.name%></option>
+                  <%})%>
+              </select>
+            </div>
+            <div class="ps-3 pe-3 pt-3">
+              <label for="idLessonTeacher">Преподаватель</label>
+              <select name="teacher" class="form-select addTeachersModal"  id="idTeacher" >
+                <option selected> Преподаватель</option>        
+              </select>
+            </div>
+          </div>
+        </form>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="btnСlose" data-bs-dismiss="modal">Отмена</button>
+          <button type="button" class="btn btn-warning" id="updateLessonBtn"> Изменить </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</body>
+
+</html>

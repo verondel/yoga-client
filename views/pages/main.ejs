@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('../partials/head'); %>
+  <script src="./js/index.js"></script>
+</head>
+
+<body style="background-color: #faf8f6;">
+  <div class="fluidPhotoHead vh-100 regular2">
+    <div class="container pt-3">
+      <nav class="navbar navbar-expand-lg navbar-light ">
+        <div class="container fs-5 pt-3">
+          <a class="navbar-brand " href="#">
+            <img src="images/logo.svg" alt="logo">
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse " id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#main">Главная</a>
+              </li>
+              <li class="nav-item ms-3">
+                <a class="nav-link" href="#about">О нас</a>
+              </li>
+              <li class="nav-item ms-3">
+                <a class="nav-link" href="#tpLessons">Типы занятий</a>
+              </li>
+              <li class="nav-item ms-3">
+                <a class="nav-link" href="#timetable">Расписание</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+
+      <div class="vh-100 d-flex">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-7 col-12">
+              <h1  class="text-primary yogaMountain">
+                <div class="row">
+                  <div class="col-lg-5 col-12">
+                    YOGA
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-5 col-12">
+                    Mountain
+                  </div>
+                </div>
+              </h1>
+            
+            </div>          
+          </div>  
+          <div class="row">
+            <div class="col-lg-3" style="padding-right: 0px;">
+              <a  href="#timetable">
+                <button type="button" class="btn btn-primary ms-2 mt-2 px-3 py-3 fs-5" style="border-radius: 200px / 190px ;">Записаться на занятие</button>
+              </a>
+              </div>
+            <div class="col-lg-3 fs-5 pt-4 learnMore">
+              <h4> <a href="#about" style="text-decoration: none" > Узнать больше 🠖</a></h4>  
+            </div>
+          </div>  
+        </div>
+      </div>
+    </div>
+
+
+
+  <div class="container-fluid">
+    <main>
+      <div class="container pb-4">
+        <h1 class="text-center pt-5 pb-3 text-primary regular2">Общее про йогу</h1>
+        <div class="pb-5 pt-4 text-center regular1">
+          Йога - это целостная практика, сочетающая физические позы, контроль дыхания, медитацию и этические принципы для укрепления здоровья, благополучия и духовного роста
+        </div>
+        <div class="row pt-4 pb-5 regular2">
+          <div class="col-lg-3">
+            <div class="row text-center pb-3 d-block ml-auto mr-auto">
+              <img src="images/woman_icon.png" alt="woman icon" style="width: 60%;" >
+            </div>
+            <div class="row text-center ps-2 pe-2">
+              Вы избавитесь от стресса и тревоги, а также сможете расслабиться и улучшить общее самочувствие
+            </div>
+          </div>
+
+          <div class="col-lg-3">
+            <div class="row text-center pb-3 d-block ml-auto mr-auto" >
+              <img src="images/lotus_icon.png" alt="lotus icon" style="width: 60%;">
+            </div>
+              <div class="row text-center ps-2 pe-2">
+                Дыхательные практики и специальные упраженения помогут сбросить вес и нормализовать гормональный баланс
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="row text-center pb-3 d-block ml-auto mr-auto">
+              <img src="images/head_icon.png" alt="head icon" style="width: 60%;">
+            </div>
+              <div class="row text-center ps-2 pe-2">
+                Йога научит вас целенаправленно взаимодействовать с моментом, что поможет улучшить внимание и работу вашего мозга в целом
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="row text-center pb-3 d-block ml-auto mr-auto">
+              <img src="images/carpet_icon.png" alt="carpet" style="width: 60%;">
+            </div>
+              <div class="row text-center ps-2 pe-2">
+                Вы улучшите физическое состояние организма, увеличите гибкость и силу, а также сможете развить координацию
+            </div>
+          </div>
+
+          
+        </div>
+      </div>
+
+
+      <a name="about">
+        <div class="fluidPhotoAboutUs vh-100 d-flex">
+          <div class="container">
+            <h1 class="regular1 text-center my-5 text-primary ">О нас</h1>
+            <div class="row">
+              <div class="col-lg-6"></div>
+              <div class="col-lg-6 pt-5 fs-3 regular2 text-primary">
+                Современная студия йоги.
+                <div>Уютные залы, опытные преподаватели, широкий выбор направлений для любого уровня подготовки.</div>
+                <div class="pt-5">Каждый найдет у нас то, что ему нужно!</div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </a> 
+
+      <a name="timetable">
+        <div class="container">
+          <h1 class=" text-center my-5 text-primary regular2">Расписание</h1>
+
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <table id="table">
+            <thead>
+              <tr>
+                <th></th>
+                <% daysOfWeekLong.forEach(function(dayOfWeekLong, index){ %>
+                  <th> 
+                    <% if (datesOfCurrentWeek[index] === todayStr) {%>
+                      <span class="day active"><%= datesOfCurrentWeek[index] %></span>
+                    <%}else{%>
+                      <span class="day"><%= datesOfCurrentWeek[index] %></span>
+                    <%}%>
+                    <div class="long active"><%= dayOfWeekLong %></div>
+                    <div class="short"><%= daysOfWeekShort[index] %></div>
+                  </th>
+                <% }) %>
+                
+                
+              </tr>
+            </thead>
+            <tbody>
+              <% timeForTable.forEach(function(time){ %>
+                <tr>
+                  <td class="hour" rowspan="4"><span><%= time%></span></td>
+                  <% for(i = 0; i < 7; i++){ %>
+                    <td class="<%= classesForTd[counter] %>"></td>
+                    <% counter++ %>
+                  <% } %>
+                </tr>
+                <% for(j = 0; j < 3; j++){ %>
+                  <tr>
+                    <% for(i = 0; i < 7; i++){ %>
+                      <td class="<%= classesForTd[counter] %>"></td>
+                      <% counter++ %>
+                    <% } %>
+                  </tr>
+                <% } %>
+              <% }); %>              
+            </tbody>
+          </table>
+        </div>
+      </a>
+
+
+
+
+
+
+      <a name="tpLessons">
+        <div class="container text-start" >
+          <h1 class=" text-center my-5 text-primary regular2">Типы занятий</h1>
+          <% tp_lessons.forEach(function(tp_lesson) { %>
+            <!-- math: isVisible + четность  -->
+            <% if (tp_lesson.is_visible==1) { %>
+              <% if (tp_lesson.id % 2==1) { %>
+
+                <div class="row align-items-start my-5">
+                  <div class="col-4">
+                    <img class="img-fluid" src="<%=tp_lesson.src_image%>" alt="beautiful yoga girl">
+
+                  </div>
+                  <div class="col-8 ps-5">
+                    <h2 class="regular1 text-start text-primary">
+                      <%= tp_lesson.name %>
+                    </h2>
+                    <article class="regular2">
+                      <%- tp_lesson.discription %>
+                    </article>
+                    <div class="pt-3"></div>
+                    <button class="btn btn-outline-primary " type="button">
+                      Записаться
+                    </button>
+                  </div>
+                </div>
+
+                <% } else{ %>
+                  <div class="row align-items-start my-5">
+                    <div class="col-7 pe-5">
+                      <h2 class="regular1 text-start text-primary">
+                        <%= tp_lesson.name %>
+                      </h2>
+                      <article class="regular2">
+                        <%- tp_lesson.discription %>
+                      </article>
+                      <div class="pt-3"></div>
+                      <button class="btn btn-outline-primary" type="button">
+                        Записаться
+                      </button>
+                    </div>
+                    <div class="col-5 ps-5">
+                      <img class="img-fluid" src="<%=tp_lesson.src_image%>" alt="beautiful yoga girl">
+                    </div>
+                  </div>
+                  <% } %>
+                    <% } %>
+                      <% }); %>
+        </div>
+      </a>
+
+      <%/* Modal for PHONE */ %>
+      <div class="modal fade needs-validation" novalidate id="phoneModal" aria-hidden="true"
+        aria-labelledby="your_number">
+
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title " id="your_number">Введите номер телефона</h5>
+              <button type="button" class="btn-close" id="btnСlose" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="ps-3 pe-3">
+                <label for="phoneMask">Телефон</label>
+                <input type="text" class="form-control i-1 " id="phoneMask" aria-describedby="phoneHelpBlock"
+                  placeholder="pip" name="" required>
+
+                <div id="phoneHelpBlock" class="form-text">
+                  Введите номер телефона без +7
+                </div>
+
+                <div class="valid-feedback">
+                  Все хорошо!
+                </div>
+
+                <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                  Введите номер телефона ПОЛНОСТЬЮ без +7
+                </div>
+
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" id="btnСlose" data-bs-dismiss="modal">Закрыть</button>
+
+              <% /* <button class="btn btn-primary" data-bs-target="#lessonModal" data-bs-toggle="modal"
+                data-bs-dismiss="modal" id="hello">
+                Открыть второе окно
+                </button> */%>
+                <button class="btn btn-primary btnPhoneModal">
+                  Проверка
+                </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <%/* Modal for LESSON */ %>
+      <div class="modal fade" id="lessonModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
+        tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalToggleLabel2">Запись на занятие</h5>
+              <button type="button" class="btn-close" id="btnСlose"  data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+ 
+            <div class="modal-body">
+              <div class="row ps-3 pe-3">
+                <label for="staticPhoneInLesson" class="col-sm-2 col-form-label">Номер</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control-plaintext" id="staticPhoneInLesson" value="" readonly>
+                </div>
+              </div>
+              <div class="ps-3 pe-3">
+                <span class='text-primary fw-bold' id="client_name"></span>, ваш абонемент действует
+              </div>
+
+              <div class="row ps-3 pe-3">
+                <label for="startDt" class="col-4 col-form-label fw-bold">C</label>
+                <div class="col-8">
+                  <input type="text" class="form-control-plaintext" id="startDt" value="" readonly>
+                </div>
+              </div>
+
+
+              <div class="row ps-3 pe-3">
+                <label for="endDt" class="col-4 col-form-label text-primary fw-bold">По</label>
+                <span class="col-8">
+                  <input type="text" class="col-8 form-control-plaintext" id="endDt" value="" readonly>
+                </span>
+              </div>
+
+              <div class="ps-3 pe-3"><span class=''> Осталось </span><span class="text-primary fw-bold" id="amount"></span>
+                <span>занятий</span>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" id='btnСlose' data-bs-dismiss="modal">Закрыть</button>
+              <button class="btn btn-primary b-2 btnRegistrationModel">ураааа</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      <% /* Modal for REGISTRATION */%>
+      
+        <div class="modal fade needs-validation" novalidate id="registrationModal" aria-hidden="true"
+          aria-labelledby="your_registration">
+
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title " id="your_registration">Регистрация</h5>
+                <button type="button" class="btn-close" id='btnСlose' data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                
+                <%/* phone */%>
+                <form id='registrationForm' onsubmit="return false;">
+                  <div class="row ps-3 pe-3">
+                    <div class="col-12 ps-3 pe-3">
+                      <input type="text" name="phone" class="form-control-plaintext" id="staticPhoneInRegistration"  value="" readonly >
+                    </div>
+                  </div>
+
+                  <div class="ps-3 pe-3 pt-3">
+                    <label for="nameModal">ФИО</label>
+                    <input type="text" name="fullName" class="form-control names" id="nameMask"  required>  
+                  </div>
+
+                  <div class="ps-3 pe-3 pt-3">
+                    <label for="dtBirth">Дата рождения</label>
+                    <input type="text" name="dtBirth" class="form-control names" id="dtBirth" required>
+                  </div>
+
+                  <div class="ps-3 pe-3 pt-3">
+                    <label for="passportModal">Серия и номер паспорта</label>
+                    <input type="text" name="passport" class="form-control" id="passportMask" required>
+                  </div>
+
+                  <div class="ps-3 pe-3 pt-3">
+                    <label for="email">Email</label>
+                    <input type="text" name="email" class="form-control" id="email" required>
+                  </div>
+
+                  <div class="ps-3 pe-3 pt-4">
+                    <div class="form-check">
+                      <label for="agreementCheckBox" class="form-check-label"></label>
+                      <input type="checkbox" name="agreement" class="form-check-input" id="agreementCheckBox" value=""  >
+                        Согласие на обработку персональных данных
+                      </label>
+                    </div>
+                  </div>
+                </form>
+
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id='btnСlose' data-bs-dismiss="modal">Закрыть</button>
+
+                <% /* <button class="btn btn-primary" data-bs-target="#lessonModal" data-bs-toggle="modal"
+                  data-bs-dismiss="modal" id="hello">
+                  Открыть второе окно
+                  </button> */%>
+                  <button class="btn btn-primary" id="btnRegistration">
+                    Зарегистрироваться 
+                  </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <a class="btn btn-primary btnFirst" data-bs-toggle="modal" role="button">Основная кнопка</a>
+</body>
+
+</main>
+
+<footer>
+  <%- include('../partials/footer'); %>
+</footer>
+
+</b>
+
+</html>

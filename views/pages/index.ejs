@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('../partials/head'); %>
+
+</head>
+
+<body class="container">
+
+  <header>
+    <%- include('../partials/header'); %>
+  </header>
+
+  <main>
+    <div class="jumbotron">
+      <h1>Yoga site</h1>
+      <p>Welcome to templating using EJS</p>
+    </div>
+
+
+    <ul>
+      <% users.forEach(function(user) { %>
+        <li>
+          фио: <%= user.full_name %>, номер :<%= user.phone %>
+        </li>
+        <% }); %>
+    </ul>
+  </main>
+
+  <footer>
+    <%- include('../partials/footer'); %>
+  </footer>
+
+</body>
+
+</html>
