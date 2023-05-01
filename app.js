@@ -69,7 +69,7 @@ app.get("/", (req, res) => {
         "ноя",
         "дек",
       ];
-      hoursForTable = [
+      let hoursForTable = [
         "08:00",
         "09:00",
         "10:00",
@@ -78,9 +78,15 @@ app.get("/", (req, res) => {
         "13:00",
         "14:00",
         "15:00",
+        "15:00",
+        "17:00",
+        "18:00",
+        "19:00",
+        "20:00",
+        "21:00",
       ];
 
-      minutesForTable = ["0", "15", "30", "45"];
+      let minutesForTable = ["0", "15", "30", "45"];
 
       const currentDay = new Date();
       let todayDate = currentDay.getDate();
@@ -95,7 +101,7 @@ app.get("/", (req, res) => {
       let mondayItterable = new Date(currentDay.setHours(3, 0, 0));
 
       mondayItterable.setDate(currentDay.getDate() - 1);
-      let classesForTd = [];
+      let timeschtampForTd = [];
 
       // генерация массива со всеми class для td
       hoursForTable.forEach((time) => {
@@ -105,12 +111,12 @@ app.get("/", (req, res) => {
             mondayItterable.setDate(mondayItterable.getDate() + 1);
             mondayItterable.setMinutes(minutes);
             let newDt = new Date(mondayItterable);
-            classesForTd.push(newDt);
+            timeschtampForTd.push(newDt);
           }
           mondayItterable.setDate(mondayItterable.getDate() - 7);
         });
       });
-      // console.log(classesForTd);
+      console.log(timeschtampForTd);
 
       let mondayNumber = currentDay.getDate();
       let mondayMonth = months[currentDay.getMonth()];
@@ -124,17 +130,18 @@ app.get("/", (req, res) => {
         datesOfCurrentWeek.push(day + " " + months[monday.getMonth()]);
       }
 
-      // console.log(datesOfCurrentWeek);
+      console.log(datesOfCurrentWeek);
 
       let counter = 0;
+
       res.render("pages/main", {
         tp_lessons: resp.data.tp_lessons, // all types of lessons
         daysOfWeekShort: daysOfWeekShort,
         daysOfWeekLong: daysOfWeekLong,
         datesOfCurrentWeek: datesOfCurrentWeek,
         todayStr: todayStr,
-        timeForTable: hoursForTable,
-        classesForTd: classesForTd,
+        hoursForTable: hoursForTable,
+        timeschtampForTd: timeschtampForTd,
         counter: counter,
         // lessons
       });

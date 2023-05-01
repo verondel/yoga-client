@@ -473,22 +473,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
       console.log("clickedIdForUpd");
       console.log("Сейчас полетит аксиос");
-      let form = new FormData(form);
+      let formDate = new FormData(document.getElementById("updateLessonForm"));
 
-      console.log(form);
-      // axios.delete("http://localhost:3001/api/lessons", {
-      //   data: { id: clickedIdForDel },
-      // })
-      //   // .delete("http://localhost:3001/api/lessons", { date: "helloVera!!!" })
-      //   .then(function (resp) {
-      //     confirmationDeleteModelBody.children[0].innerHTML =
-      //       "Вы уверены, что хотите удалить занятие ";
-      //     closeModal("confirmation");
-      //     targetIdForDel.remove();
-      //   })
-      //   .catch(function (error) {
-      //     console.log(error);
-      //   });
+      // console.log(form);
+      axios
+        .post("http://localhost:3001/api/lessons", formDate, {
+          headers: {
+            "Content-Type": "multipart/form-date",
+          },
+        })
+        // .delete("http://localhost:3001/api/lessons", { date: "helloVera!!!" })
+        .then(function (resp) {
+          console.log("прилетело", resp);
+          // confirmationDeleteModelBody.children[0].innerHTML =
+          //   "Вы уверены, что хотите удалить занятие ";
+          // closeModal("confirmation");
+          // targetIdForDel.remove();
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     });
 });
 
