@@ -162,18 +162,18 @@
               </tr>
             </thead>
             <tbody>
-              <% timeForTable.forEach(function(time){ %>
+              <% hoursForTable.forEach(function(time){ %>
                 <tr>
                   <td class="hour" rowspan="4"><span><%= time%></span></td>
                   <% for(i = 0; i < 7; i++){ %>
-                    <td class="<%= classesForTd[counter] %>"></td>
+                    <td class="<%= timeschtampForTd[counter] %>"></td>
                     <% counter++ %>
                   <% } %>
                 </tr>
                 <% for(j = 0; j < 3; j++){ %>
                   <tr>
                     <% for(i = 0; i < 7; i++){ %>
-                      <td class="<%= classesForTd[counter] %>"></td>
+                      <td class="<%= timeschtampForTd[counter] %>"></td>
                       <% counter++ %>
                     <% } %>
                   </tr>
