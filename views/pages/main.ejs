@@ -166,14 +166,125 @@
                 <tr>
                   <td class="hour" rowspan="4"><span><%= time%></span></td>
                   <% for(i = 0; i < 7; i++){ %>
-                    <td class="<%= timeschtampForTd[counter] %>"></td>
+                    <td class="<%= sft[counter].dt %>  text-start">
+                      <% if ('id' in sft[counter]) {%>
+                        <% if (sft[counter].part == 0){ %>
+                          <div class="ms-1 me-1 ps-1 zero" 
+                              id="<%= sft[counter].id %>"
+                              strDt="<%= sft[counter].strDt %>"
+                              strTime="<%= sft[counter].strTime %>"
+                              strTeacher="<%= sft[counter].strTeacher %>"
+                              tp_lesson="<%= sft[counter].tp_lesson %>"
+                              id_tp_lesson="<%= sft[counter].id_tp_lesson %>"
+                              %>"
+                              >
+                            <%= sft[counter].strDt %>  <%= sft[counter].strTime %>
+                          </div>
+                        <% } else if (sft[counter].part == 1){%>
+                          <div class="ms-1 me-1 ps-1 first"
+                              id="<%= sft[counter].id %>"
+                              strDt="<%= sft[counter].strDt %>"
+                              strTime="<%= sft[counter].strTime %>"
+                              strTeacher="<%= sft[counter].strTeacher %>"
+                              tp_lesson="<%= sft[counter].tp_lesson %>"
+                              id_tp_lesson="<%= sft[counter].id_tp_lesson %>"
+                              >
+                            <%=sft[counter].tp_lesson %>
+                          </div>
+                        <% } else if (sft[counter].part == 2){%>
+                          <div class="ms-1 me-1 ps-1 second" 
+                              id="<%= sft[counter].id %>"
+                              strDt="<%= sft[counter].strDt %>"
+                              strTime="<%= sft[counter].strTime %>"
+                              strTeacher="<%= sft[counter].strTeacher %>"
+                              tp_lesson="<%= sft[counter].tp_lesson %>"
+                              id_tp_lesson="<%= sft[counter].id_tp_lesson %>"
+                            
+                              >
+                            <%= sft[counter].strTeacher %>
+                          </div>
+                        <% }else{ %>
+                          <div class="ms-1 me-1 ps-1 any" 
+                            id="<%= sft[counter].id %>"
+                            strDt="<%= sft[counter].strDt %>"
+                            strTime="<%= sft[counter].strTime %>"
+                            strTeacher="<%= sft[counter].strTeacher %>"
+                            tp_lesson="<%= sft[counter].tp_lesson %>"
+                            id_tp_lesson="<%= sft[counter].id_tp_lesson %>"
+                            >
+                            <%= sft[counter].part %>
+                          </div>
+                        <% } %>
+                      <% } %>
+                    </td>
                     <% counter++ %>
                   <% } %>
                 </tr>
                 <% for(j = 0; j < 3; j++){ %>
                   <tr>
                     <% for(i = 0; i < 7; i++){ %>
-                      <td class="<%= timeschtampForTd[counter] %>"></td>
+                      <td class="<%= sft[counter].dt %>  text-start" >
+
+                        <% if ('id' in sft[counter]) {%>
+                          <% if (sft[counter].part == 0){ %>
+                              <div class="ms-1 me-1 ps-1 zero" 
+                              id="<%= sft[counter].id %>"
+                              strDt="<%= sft[counter].strDt %>"
+                              strTime="<%= sft[counter].strTime %>"
+                              strTeacher="<%= sft[counter].strTeacher %>"
+                              tp_lesson="<%= sft[counter].tp_lesson %>"
+                              id_tp_lesson="<%= sft[counter].id_tp_lesson %>"
+                              >
+                              <%= sft[counter].strDt %><%= sft[counter].strTime %>
+                            </div>
+                          <% } else if (sft[counter].part == 1){%>
+                            <div class="ms-1 me-1 ps-1 first" 
+                              id="<%= sft[counter].id %>"
+                              strDt="<%= sft[counter].strDt %>"
+                              strTime="<%= sft[counter].strTime %>"
+                              strTeacher="<%= sft[counter].strTeacher %>"
+                              tp_lesson="<%= sft[counter].tp_lesson %>"
+                              id_tp_lesson="<%= sft[counter].id_tp_lesson %>"
+                              >
+                              <%= sft[counter].tp_lesson %>
+                            </div>
+                          <% } else if (sft[counter].part == 2){%>
+                            <div class="ms-1 me-1 ps-1 second" 
+                              id="<%= sft[counter].id %>"
+                              strDt="<%= sft[counter].strDt %>"
+                              strTime="<%= sft[counter].strTime %>"
+                              strTeacher="<%= sft[counter].strTeacher %>"
+                              tp_lesson="<%= sft[counter].tp_lesson %>"
+                              id_tp_lesson="<%= sft[counter].id_tp_lesson %>"
+                              >
+                              <%= sft[counter].strTeacher %>
+                            </div>
+                          <% } else if (sft[counter].part == 5){%>
+                            <div class="ms-1 me-1 ps-1 five any" 
+                              id="<%= sft[counter].id %>"
+                              strDt="<%= sft[counter].strDt %>"
+                              strTime="<%= sft[counter].strTime %>"
+                              strTeacher="<%= sft[counter].strTeacher %>"
+                              tp_lesson="<%= sft[counter].tp_lesson %>"
+                              id_tp_lesson="<%= sft[counter].id_tp_lesson %>"
+                              >
+                              <%= sft[counter].part %>
+                            </div>
+                          <% }else{ %>
+                            <div class="ms-1 me-1 ps-1 any" 
+                              id="<%= sft[counter].id %>"
+                              strDt="<%= sft[counter].strDt %>"
+                              strTime="<%= sft[counter].strTime %>"
+                              strTeacher="<%= sft[counter].strTeacher %>"
+                              tp_lesson="<%= sft[counter].tp_lesson %>"
+                              id_tp_lesson="<%= sft[counter].id_tp_lesson %>"
+                              >
+                              <%= sft[counter].part %>
+                            </div>
+                          <% } %>
+                        <% } %>
+
+                      </td>
                       <% counter++ %>
                     <% } %>
                   </tr>
@@ -293,7 +404,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalToggleLabel2">Запись на занятие</h5>
-              <button type="button" class="btn-close" id="btnСlose"  data-bs-dismiss="modal" aria-label="Close"></button>
+              <button type="button" class="btn-close clearBook" id="btnСlose"  data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
  
             <div class="modal-body">
@@ -325,10 +436,18 @@
               <div class="ps-3 pe-3"><span class=''> Осталось </span><span class="text-primary fw-bold" id="amount"></span>
                 <span>занятий</span>
               </div>
+
+              <div class="ps-3 pe-3">
+                Вы хотите записаться на занятие
+                  <div class="ps-2" id="bookLesson">
+                    hello world
+                  </div>
+              </div>
+
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" id='btnСlose' data-bs-dismiss="modal">Закрыть</button>
-              <button class="btn btn-primary b-2 btnRegistrationModel">ураааа</button>
+              <button type="button" class="btn btn-secondary clearBook" id='btnСlose' data-bs-dismiss="modal">Закрыть</button>
+              <button class="btn btn-primary b-2 btnBookModel">записаться</button>
             </div>
           </div>
         </div>

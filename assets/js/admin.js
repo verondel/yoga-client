@@ -235,7 +235,8 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("Stage 4.1 yes", checksWerePassed);
 
         inputForTime[idx].classList.remove("is-invalid");
-        hallSelect[idx].classList.remove("is-invalid");
+        // console.log(hallSelect[idx].classList);
+        // hallSelect[idx].classList.remove("is-invalid");
 
         let amoutOfLessons = document.getElementById("reAmount").value;
 
