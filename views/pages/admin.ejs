@@ -33,11 +33,17 @@
   <main>
     <div class="p-5 rounded" style="background-color: #ffffff;" >
       <nav class="row">
-        <a class="nav-link active" aria-current="page" href="/">Home</a>
+        <a class="nav-link active" aria-current="page" href="/">
+          Home
+        </a>
       </nav>
       <h1>Панель администратора</h1>
       <div class="p-1"></div>
-      <h2><span style="background-color: #f6f6f6;  color:#56463c"> Добавить новое занятие </span></h2>
+      <h2>
+        <span style="background-color: #f6f6f6; color:#56463c"> 
+          Добавить новое занятие 
+        </span>
+      </h2>
       <div class="p-2"></div>
 
       <form class="col-12" id='addLessonForm' onsubmit="return false;">
@@ -53,7 +59,7 @@
               </select>
             </div>
             <div class="col-lg-6 col-sm-12">            
-              <select class="form-select tpLessons" id="tpLessons" name="tp_lesson" onchange="addTeachers('addTeachers', 'tpLessons')">
+              <select name="tp_lesson" class="form-select tpLessons" id="tpLessons" onchange="addTeachers('addTeachers', 'tpLessons')">
                 <option selected disabled>Тип занятия</option>
                 <%tp_lessons.forEach(function(tp_lesson) { %>
                     <option value=<%= tp_lesson.id %>><%= tp_lesson.name%></option>
@@ -84,7 +90,7 @@
           
             <div class="container col-lg-6 col-s-12">
               <div class="form-floating">
-                <input type="text" class="form-control col" id="reAmount" placeholder="reAmount" name="reAmount" disabled>
+                <input type="text" name="reAmount" class="form-control col" id="reAmount" placeholder="reAmount" disabled>
                 <label for="reAmount">Количество</label>
               </div>
             </div>
@@ -109,7 +115,13 @@
           <div class="row weekDaysTime">
             <div class="container col addWeekDaysTime">
               <div class="row">
-                <div class="col-lg-2 pt-xxl-2">По <span style="color: #AB9384	;" class="timeForFirstRep"> ___ </span> в</div>
+                <div class="col-lg-2 pt-xxl-2">
+                  По 
+                  <span style="color: #AB9384	;" class="timeForFirstRep">
+                    ___ 
+                  </span> 
+                  в
+                </div>
                 <div class="col-lg-3">
                   <input type="text" name="timeOfDay[]" class="form-control timeMask" id="timeOnDayOfTheWeek" disabled >
                 </div>  
@@ -122,12 +134,8 @@
                 </div>  
               </div> 
                */%> 
-
-            </div>
-            
+            </div>     
           </div>
-          
-        
           
           
           <div class="p-3"></div>
@@ -155,8 +163,7 @@
             </div>
           </div>
           </div>
-          
-          
+
           
           <div class="p-3"></div>
           <button type="submit" class="btn btn-primary btnAdminAdd">добавить</button>
@@ -192,36 +199,28 @@
         </div>
       </div>
 
-
+      <%/*
       <div class="pt-4"></div>
       <h2>Добавить нового преподавателя</h2>
       <div class="p-2"></div>
-
-
       <form class="col-12" id="addTeacherForm" onsubmit="return false;">
         <div class="col-6">
           <input type="file" name="myPicture" class="file">
           <button type="submit" class="btn btn-primary btnAddTeacher">добавить</button>
         </div>
       </form>
-
-
-
+      */%>
         <!-- элемент input с id = datetimepicker1 -->
-
-
-
-
 
   </main>
   
-  <%/* Modal conformation */ %>
+  <%/* Modal for DELETE */ %>
 
   <div class="modal fade" tabindex="-1" id="confirmation" aria-hidden="true"
       aria-labelledby="your_number">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-        <div class="modal-header">
+        <div class="modal-header" style="background-color: #ffe5e8;">
           <h5 class="modal-title">
             <img src="/images/warning_icon.png" alt="warining icon"  width="23" height="26" class="pb-1 me-1">
             Удалить занятие
@@ -231,7 +230,7 @@
         <div class="modal-body" id="confirmationDeleteModelBody">
           <p class="ps-3 pe-3">Вы уверены, что хотите удалить занятие </p>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer" >
           <button type="button" class="btn btn-secondary" id="btnСlose" data-bs-dismiss="modal">Отмена</button>
           <button type="button" class="btn btn-danger" id="btnDelLessonAfterConfirmation" >Удалить</button>
         </div>
@@ -244,10 +243,10 @@
       aria-labelledby="your_number">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-        <div class="modal-header">
+        <div class="modal-header" style="background-color: #fff7de;">
           <h5 class="modal-title"> 
             <img src="/images/edit_icon.png" alt="caution icon" width="20" height="25" class="pb-1"> 
-            Изменить занятие
+            <span class="ps-1">Изменить занятие</span>
           </h5>
           <button type="button" class="btn-close" id="btnСlose" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
@@ -304,9 +303,6 @@
       </div>
     </div>
   </div>
-
-
-
 </body>
 
 </html>
