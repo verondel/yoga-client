@@ -60,11 +60,16 @@
           <div class="row">
             <div class="col-lg-3" style="padding-right: 0px;">
               <a  href="#timetable">
-                <button type="button" class="btn btn-primary ms-2 mt-2 px-3 py-3 fs-5" style="border-radius: 200px / 190px ;">Записаться на занятие</button>
+                <button type="button" class="btn btn-primary ms-2 mt-2 px-3 py-3 fs-5" 
+                  style="border-radius: 200px / 190px ;">
+                  Записаться на занятие
+                </button>
               </a>
               </div>
             <div class="col-lg-3 fs-5 pt-4 learnMore">
-              <h4> <a href="#about" style="text-decoration: none" > Узнать больше 🠖</a></h4>  
+              <h4> 
+                <a href="#about" style="text-decoration: none" > Узнать больше 🠖</a>
+              </h4>  
             </div>
           </div>  
         </div>
@@ -78,7 +83,8 @@
       <div class="container pb-4">
         <h1 class="text-center pt-5 pb-3 text-primary regular2">Общее про йогу</h1>
         <div class="pb-5 pt-4 text-center regular1">
-          Йога - это целостная практика, сочетающая физические позы, контроль дыхания, медитацию и этические принципы для укрепления здоровья, благополучия и духовного роста
+          Йога - это целостная практика, сочетающая физические позы, контроль дыхания,
+          медитацию и этические принципы для укрепления здоровья, благополучия и духовного роста
         </div>
         <div class="row pt-4 pb-5 regular2">
           <div class="col-lg-3">
@@ -95,7 +101,8 @@
               <img src="images/lotus_icon.png" alt="lotus icon" style="width: 60%;">
             </div>
               <div class="row text-center ps-2 pe-2">
-                Дыхательные практики и специальные упраженения помогут сбросить вес и нормализовать гормональный баланс
+                Дыхательные практики и специальные упраженения помогут сбросить вес и 
+                нормализовать гормональный баланс
             </div>
           </div>
           <div class="col-lg-3">
@@ -103,7 +110,8 @@
               <img src="images/head_icon.png" alt="head icon" style="width: 60%;">
             </div>
               <div class="row text-center ps-2 pe-2">
-                Йога научит вас целенаправленно взаимодействовать с моментом, что поможет улучшить внимание и работу вашего мозга в целом
+                Йога научит вас целенаправленно взаимодействовать с моментом, что поможет 
+                улучшить внимание и работу вашего мозга в целом
             </div>
           </div>
           <div class="col-lg-3">
@@ -111,7 +119,8 @@
               <img src="images/carpet_icon.png" alt="carpet" style="width: 60%;">
             </div>
               <div class="row text-center ps-2 pe-2">
-                Вы улучшите физическое состояние организма, увеличите гибкость и силу, а также сможете развить координацию
+                Вы улучшите физическое состояние организма, увеличите гибкость и силу, 
+                а также сможете развить координацию
             </div>
           </div>
 
@@ -128,8 +137,12 @@
               <div class="col-lg-6"></div>
               <div class="col-lg-6 pt-5 fs-3 regular2 text-primary">
                 Современная студия йоги.
-                <div>Уютные залы, опытные преподаватели, широкий выбор направлений для любого уровня подготовки.</div>
-                <div class="pt-5">Каждый найдет у нас то, что ему нужно!</div>
+                <div>
+                  Уютные залы, опытные преподаватели, широкий выбор направлений для любого уровня подготовки.
+                </div>
+                <div class="pt-5">
+                  Каждый найдет у нас то, что ему нужно!
+                </div>
               </div>
             </div>
           </div>
@@ -162,57 +175,100 @@
               </tr>
             </thead>
             <tbody>
+
+
               <% hoursForTable.forEach(function(time){ %>
                 <tr>
                   <td class="hour" rowspan="4"><span><%= time%></span></td>
                   <% for(i = 0; i < 7; i++){ %>
                     <td class="<%= sft[counter].dt %>  text-start">
                       <% if ('id' in sft[counter]) {%>
+
                         <% if (sft[counter].part == 0){ %>
                           <div class="ms-1 me-1 ps-1 zero" 
                               id="<%= sft[counter].id %>"
+                              dtTD="<%= sft[counter].dtTd %>"
                               strDt="<%= sft[counter].strDt %>"
                               strTime="<%= sft[counter].strTime %>"
                               strTeacher="<%= sft[counter].strTeacher %>"
                               tp_lesson="<%= sft[counter].tp_lesson %>"
                               id_tp_lesson="<%= sft[counter].id_tp_lesson %>"
-                              %>"
+                              delBorder='<%= sft[counter].delBorder %>'
+                              style="
+                                border-left: solid <%= sft[counter].color %>; 
+                                box-shadow: 2px 0px 6px 0px  <%= sft[counter].color %>;
+                              "
                               >
                             <%= sft[counter].strDt %>  <%= sft[counter].strTime %>
                           </div>
                         <% } else if (sft[counter].part == 1){%>
                           <div class="ms-1 me-1 ps-1 first"
                               id="<%= sft[counter].id %>"
+                              dtTD="<%= sft[counter].dtTd %>"
                               strDt="<%= sft[counter].strDt %>"
                               strTime="<%= sft[counter].strTime %>"
                               strTeacher="<%= sft[counter].strTeacher %>"
                               tp_lesson="<%= sft[counter].tp_lesson %>"
                               id_tp_lesson="<%= sft[counter].id_tp_lesson %>"
+                              delBorder='<%= sft[counter].delBorder %>'
+                              style="
+                                border-left: solid <%= sft[counter].color %>; 
+                                box-shadow: 44px 0px 30px -30px <%= sft[counter].color %>;
+                              "
                               >
                             <%=sft[counter].tp_lesson %>
                           </div>
                         <% } else if (sft[counter].part == 2){%>
                           <div class="ms-1 me-1 ps-1 second" 
                               id="<%= sft[counter].id %>"
+                              dtTD="<%= sft[counter].dtTd %>"
                               strDt="<%= sft[counter].strDt %>"
                               strTime="<%= sft[counter].strTime %>"
                               strTeacher="<%= sft[counter].strTeacher %>"
                               tp_lesson="<%= sft[counter].tp_lesson %>"
                               id_tp_lesson="<%= sft[counter].id_tp_lesson %>"
-                            
+                              delBorder='<%= sft[counter].delBorder %>'
+                              style="
+                                font-size: 0.8em;
+                                border-left: solid <%= sft[counter].color %>; 
+                                box-shadow: 44px 0px 30px -30px black;
+                              "
                               >
                             <%= sft[counter].strTeacher %>
                           </div>
+                        <% } else if (sft[counter].part == 5){%>
+                            <div class="ms-1 me-1 ps-1 five any" 
+                              id="<%= sft[counter].id %>"
+                              dtTD="<%= sft[counter].dtTd %>"
+                              strDt="<%= sft[counter].strDt %>"
+                              strTime="<%= sft[counter].strTime %>"
+                              strTeacher="<%= sft[counter].strTeacher %>"
+                              tp_lesson="<%= sft[counter].tp_lesson %>"
+                              id_tp_lesson="<%= sft[counter].id_tp_lesson %>"
+                              delBorder='<%= sft[counter].delBorder %>'
+                              style="
+                                border-left: solid <%= sft[counter].color %>; 
+                                box-shadow: 2px 13px 18px -7px  <%= sft[counter].color %>;
+                              "
+                              >
+                              <%/* sft[counter].part */%>
+                            </div>
                         <% }else{ %>
                           <div class="ms-1 me-1 ps-1 any" 
                             id="<%= sft[counter].id %>"
+                            dtTD="<%= sft[counter].dtTd %>"
                             strDt="<%= sft[counter].strDt %>"
                             strTime="<%= sft[counter].strTime %>"
                             strTeacher="<%= sft[counter].strTeacher %>"
                             tp_lesson="<%= sft[counter].tp_lesson %>"
                             id_tp_lesson="<%= sft[counter].id_tp_lesson %>"
+                            delBorder='<%= sft[counter].delBorder %>'
+                            style="
+                              border-left: solid <%= sft[counter].color %>; 
+                              box-shadow: 44px 0px 30px -30px <%= sft[counter].color %>;
+                            "
                             >
-                            <%= sft[counter].part %>
+                            <%/* sft[counter].part */%>
                           </div>
                         <% } %>
                       <% } %>
@@ -229,57 +285,89 @@
                           <% if (sft[counter].part == 0){ %>
                               <div class="ms-1 me-1 ps-1 zero" 
                               id="<%= sft[counter].id %>"
+                              dtTD="<%= sft[counter].dtTd %>"
                               strDt="<%= sft[counter].strDt %>"
                               strTime="<%= sft[counter].strTime %>"
                               strTeacher="<%= sft[counter].strTeacher %>"
                               tp_lesson="<%= sft[counter].tp_lesson %>"
                               id_tp_lesson="<%= sft[counter].id_tp_lesson %>"
+                              delBorder='<%= sft[counter].delBorder %>'
+                              style="
+                                border-left: solid <%= sft[counter].color %>; 
+                                box-shadow: 2px 0px 6px 0px  <%= sft[counter].color %>;
+                              "
                               >
-                              <%= sft[counter].strDt %><%= sft[counter].strTime %>
+                              <%= sft[counter].strDt %>  <%= sft[counter].strTime %>
                             </div>
                           <% } else if (sft[counter].part == 1){%>
                             <div class="ms-1 me-1 ps-1 first" 
                               id="<%= sft[counter].id %>"
+                              dtTD="<%= sft[counter].dtTd %>"
                               strDt="<%= sft[counter].strDt %>"
                               strTime="<%= sft[counter].strTime %>"
                               strTeacher="<%= sft[counter].strTeacher %>"
                               tp_lesson="<%= sft[counter].tp_lesson %>"
                               id_tp_lesson="<%= sft[counter].id_tp_lesson %>"
+                              delBorder='<%= sft[counter].delBorder %>'
+                              style="
+                                border-left: solid <%= sft[counter].color %>; 
+                                box-shadow: 44px 0px 30px -30px <%= sft[counter].color %>;
+                              "
+      
                               >
                               <%= sft[counter].tp_lesson %>
                             </div>
                           <% } else if (sft[counter].part == 2){%>
                             <div class="ms-1 me-1 ps-1 second" 
                               id="<%= sft[counter].id %>"
+                              dtTD="<%= sft[counter].dtTd %>"
                               strDt="<%= sft[counter].strDt %>"
                               strTime="<%= sft[counter].strTime %>"
                               strTeacher="<%= sft[counter].strTeacher %>"
                               tp_lesson="<%= sft[counter].tp_lesson %>"
                               id_tp_lesson="<%= sft[counter].id_tp_lesson %>"
+                              delBorder='<%= sft[counter].delBorder %>'
+                              style="
+                                font-size: 0.8em;
+                                border-left: solid <%= sft[counter].color %>; 
+                                box-shadow: 44px 0px 30px -30px black;
+                              "
                               >
                               <%= sft[counter].strTeacher %>
                             </div>
                           <% } else if (sft[counter].part == 5){%>
                             <div class="ms-1 me-1 ps-1 five any" 
                               id="<%= sft[counter].id %>"
+                              dtTD="<%= sft[counter].dtTd %>"
                               strDt="<%= sft[counter].strDt %>"
                               strTime="<%= sft[counter].strTime %>"
                               strTeacher="<%= sft[counter].strTeacher %>"
                               tp_lesson="<%= sft[counter].tp_lesson %>"
                               id_tp_lesson="<%= sft[counter].id_tp_lesson %>"
+                              delBorder='<%= sft[counter].delBorder %>'                       
+                              style="
+                                border-left: solid <%= sft[counter].color %>; 
+                                box-shadow: 2px 13px 18px -7px  <%= sft[counter].color %>;
+                              "
                               >
-                              <%= sft[counter].part %>
+                              <%/* sft[counter].part */%>
                             </div>
                           <% }else{ %>
                             <div class="ms-1 me-1 ps-1 any" 
                               id="<%= sft[counter].id %>"
+                              dtTD="<%= sft[counter].dtTd %>"
                               strDt="<%= sft[counter].strDt %>"
                               strTime="<%= sft[counter].strTime %>"
                               strTeacher="<%= sft[counter].strTeacher %>"
                               tp_lesson="<%= sft[counter].tp_lesson %>"
                               id_tp_lesson="<%= sft[counter].id_tp_lesson %>"
+                              delBorder='<%= sft[counter].delBorder %>'
+                              style="
+                                border-left: solid <%= sft[counter].color %>; 
+                                box-shadow: 44px 0px 30px -30px <%= sft[counter].color %>;
+                              "
                               >
-                              <%= sft[counter].part %>
+                              <%/* sft[counter].part */%>
                             </div>
                           <% } %>
                         <% } %>
@@ -321,7 +409,7 @@
                       <%- tp_lesson.discription %>
                     </article>
                     <div class="pt-3"></div>
-                    <button class="btn btn-outline-primary " type="button">
+                    <button class="btn btn-outline-primary " type="button" onclick="location.href='#timetable'">
                       Записаться
                     </button>
                   </div>
@@ -337,7 +425,7 @@
                         <%- tp_lesson.discription %>
                       </article>
                       <div class="pt-3"></div>
-                      <button class="btn btn-outline-primary" type="button">
+                      <button class="btn btn-outline-primary" type="button" onclick="location.href='#timetable'">
                         Записаться
                       </button>
                     </div>
@@ -404,7 +492,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalToggleLabel2">Запись на занятие</h5>
-              <button type="button" class="btn-close clearBook" id="btnСlose"  data-bs-dismiss="modal" aria-label="Close"></button>
+              <button type="button" class="btn-close" id="btnСlose"  data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
  
             <div class="modal-body">
@@ -439,15 +527,15 @@
 
               <div class="ps-3 pe-3">
                 Вы хотите записаться на занятие
-                  <div class="ps-2" id="bookLesson">
-                    hello world
-                  </div>
+                  <div class="ps-2" id="tp_lesson"></div>
+                  <div class="ps-2" id="dt"></div>
+                  <div class="ps-2" id="teacher"></div>
               </div>
 
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary clearBook" id='btnСlose' data-bs-dismiss="modal">Закрыть</button>
-              <button class="btn btn-primary b-2 btnBookModel">записаться</button>
+              <button type="button" class="btn btn-secondary" id='btnСlose' data-bs-dismiss="modal">Закрыть</button>
+              <button class="btn btn-primary b-2 btnBookModal">Записаться</button>
             </div>
           </div>
         </div>
@@ -456,75 +544,250 @@
 
 
 
-      <% /* Modal for REGISTRATION */%>
-      
-        <div class="modal fade needs-validation" novalidate id="registrationModal" aria-hidden="true"
-          aria-labelledby="your_registration">
+  <% /* Modal for REGISTRATION */%>
+  
+    <div class="modal fade needs-validation" novalidate id="registrationModal" aria-hidden="true"
+      aria-labelledby="your_registration">
 
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title " id="your_registration">Регистрация</h5>
-                <button type="button" class="btn-close" id='btnСlose' data-bs-dismiss="modal" aria-label="Close"></button>
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title " id="your_registration">Регистрация</h5>
+            <button type="button" class="btn-close" id='btnСlose' data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            
+            <%/* phone */%>
+            <form id='registrationForm' onsubmit="return false;">
+              <div class="row ps-3 pe-3">
+                <div class="col-12 ps-3 pe-3">
+                  <input type="text" name="phone" class="form-control-plaintext" id="staticPhoneInRegistration"  value="" readonly >
+                </div>
               </div>
-              <div class="modal-body">
-                
-                <%/* phone */%>
-                <form id='registrationForm' onsubmit="return false;">
-                  <div class="row ps-3 pe-3">
-                    <div class="col-12 ps-3 pe-3">
-                      <input type="text" name="phone" class="form-control-plaintext" id="staticPhoneInRegistration"  value="" readonly >
+
+              <div class="ps-3 pe-3 pt-3">
+                <label for="nameModal">ФИО</label>
+                <input type="text" name="fullName" class="form-control names" id="nameMask"  required>  
+              </div>
+
+              <div class="ps-3 pe-3 pt-3">
+                <label for="dtBirth">Дата рождения</label>
+                <input type="text" name="dtBirth" class="form-control names" id="dtBirth" required>
+              </div>
+
+              <div class="ps-3 pe-3 pt-3">
+                <label for="passportModal">Серия и номер паспорта</label>
+                <input type="text" name="passport" class="form-control" id="passportMask" required>
+              </div>
+
+              <div class="ps-3 pe-3 pt-3">
+                <label for="email">Email</label>
+                <input type="text" name="email" class="form-control" id="email" required>
+              </div>
+
+              <div class="ps-3 pe-3 pt-4">
+                <div class="form-check">
+                  <label for="agreementCheckBox" class="form-check-label"></label>
+                  <input type="checkbox" name="agreement" class="form-check-input" id="agreementCheckBox" value=""  >
+                    Согласие на обработку персональных данных
+                  </label>
+                </div>
+              </div>
+            </form>
+
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id='btnСlose' data-bs-dismiss="modal">Закрыть</button>
+
+            <% /* <button class="btn btn-primary" data-bs-target="#lessonModal" data-bs-toggle="modal"
+              data-bs-dismiss="modal" id="hello">
+              Открыть второе окно
+              </button> */%>
+              <button class="btn btn-primary" id="btnRegistration">
+                Зарегистрироваться 
+              </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <%/* Modal for FIRST LESSON */ %>
+    <div class="modal fade" id="firstLessonModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
+    tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalToggleLabel2">
+              Запись на пробное занятие
+            </h5>
+            <button type="button" class="btn-close" id="btnСlose"  data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+            <div class="ps-3 pe-3">
+              Знакомство со студией 400 руб.
+            </div>
+
+            <div class="ps-3 pe-3">
+              <span class='text-primary fw-bold' id="clientNameFirstLesson"></span>, Вы хотите записаться на 
+            </div>
+
+            <div class="ps-3 pe-3">
+                <div class="ps-2" id="tpLessonFirstLesson"></div>
+                <div class="ps-2" id="dtFirstLesson"></div>
+                <div class="ps-2" id="teacherFirstLesson"></div>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id='btnСlose' data-bs-dismiss="modal">Закрыть</button>
+            <button class="btn btn-primary b-2 btnFirstBookModal">Подтвердить</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <%/* Modal for BUYING NEW SUBSCRIPTION */ %>
+    <div class="modal fade" id="buySubscrition" aria-hidden="true" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalToggleLabel2">
+                Купить абонемент
+              </h5>
+              <button type="button" class="btn-close" id="btnСlose"  data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+              <div class="ps-3 pe-3">
+                <span class='text-primary fw-bold' id="problem"></span>
+              </div>
+              <div class="ps-3 pe-3">
+                Выберите тариф:
+              </div>
+              <form id='subsctiptionForm' onsubmit="return false;">
+                <div class="ps-3 pe-3 pt-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="type" id="once" value="1" checked>
+                    <label class="form-check-label ps-2" for="once">
+                      Разовое посещение     800р
+                    </label>
+                  </div>
+
+                  <div class="pt-2"></div>
+
+                  <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-3 ">Срок</div>
+                    <div class="col-4 ps-4">Занятия</div>
+                    <div class="col-4">Стоимость</div>
+                  </div>
+
+                  <div class="form-check row pt-2">
+                    <div class="col">
+                      <input class="form-check-input" type="radio" name="type" value="4">
                     </div>
-                  </div>
-
-                  <div class="ps-3 pe-3 pt-3">
-                    <label for="nameModal">ФИО</label>
-                    <input type="text" name="fullName" class="form-control names" id="nameMask"  required>  
-                  </div>
-
-                  <div class="ps-3 pe-3 pt-3">
-                    <label for="dtBirth">Дата рождения</label>
-                    <input type="text" name="dtBirth" class="form-control names" id="dtBirth" required>
-                  </div>
-
-                  <div class="ps-3 pe-3 pt-3">
-                    <label for="passportModal">Серия и номер паспорта</label>
-                    <input type="text" name="passport" class="form-control" id="passportMask" required>
-                  </div>
-
-                  <div class="ps-3 pe-3 pt-3">
-                    <label for="email">Email</label>
-                    <input type="text" name="email" class="form-control" id="email" required>
-                  </div>
-
-                  <div class="ps-3 pe-3 pt-4">
-                    <div class="form-check">
-                      <label for="agreementCheckBox" class="form-check-label"></label>
-                      <input type="checkbox" name="agreement" class="form-check-input" id="agreementCheckBox" value=""  >
-                        Согласие на обработку персональных данных
+                    <div class="col">
+                      <label class="form-check-label row" for="four">
+                        <div class="col-3 ps-3">1 месяц</div>
+                        <div class="col-5 text-center pe-3">4</div>
+                        <div class="col-4">2800p</div>
                       </label>
                     </div>
                   </div>
-                </form>
+
+                  <div class="form-check row pt-1">
+                    <div class="col">
+                      <input class="form-check-input" type="radio" name="type" value="6">
+                    </div>
+                    <div class="col">
+                      <label class="form-check-label row" for="four">
+                        <div class="col-3 ps-3">1 месяц</div>
+                        <div class="col-5 text-center pe-3">6</div>
+                        <div class="col-4">3500p</div>
+                      </label>
+                    </div>
+                  </div>
 
 
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" id='btnСlose' data-bs-dismiss="modal">Закрыть</button>
+                  <div class="form-check row pt-1">
+                    <div class="col">
+                      <input class="form-check-input" type="radio" name="type" value="8">
+                    </div>
+                    <div class="col">
+                      <label class="form-check-label row" for="four">
+                        <div class="col-3 ps-3">2 месяц</div>
+                        <div class="col-5 text-center pe-3">8</div>
+                        <div class="col-4">4900p</div>
+                      </label>
+                    </div>
+                  </div>
 
-                <% /* <button class="btn btn-primary" data-bs-target="#lessonModal" data-bs-toggle="modal"
-                  data-bs-dismiss="modal" id="hello">
-                  Открыть второе окно
-                  </button> */%>
-                  <button class="btn btn-primary" id="btnRegistration">
-                    Зарегистрироваться 
-                  </button>
-              </div>
+                  <div class="form-check row pt-1">
+                    <div class="col">
+                      <input class="form-check-input" type="radio" name="type" value="12">
+                    </div>
+                    <div class="col">
+                      <label class="form-check-label row" for="four">
+                        <div class="col-3 ps-3">2 месяц</div>
+                        <div class="col-5 text-center pe-3">12</div>
+                        <div class="col-4">6600p</div>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary " id='btnСlose' data-bs-dismiss="modal">Закрыть</button>
+              <button class="btn btn-primary b-2 subscriptionModal">Подтвердить</button>
             </div>
           </div>
         </div>
+    </div>
 
-        <a class="btn btn-primary btnFirst" data-bs-toggle="modal" role="button">Основная кнопка</a>
+
+
+    <%/* Modal for WAITING YOU */ %>
+    <div class="modal fade" id="waitingYouModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
+    tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalToggleLabel2">
+              Вы записались
+            </h5>
+            <button type="button" class="btn-close " id="btnСlose"  data-bs-dismiss="modal" aria-label="Close"></button>
+          </div> 
+
+          <div class="modal-body">
+
+            <div class="ps-3 pe-3">
+              <span class='text-primary fw-bold' id="clientNameWaiting"></span>, 
+              <span>до встречи на практике! :) </span>
+            </div>
+
+            <div class="ps-3 pe-3">
+                <div class="ps-2" id="tpLesson"></div>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <%/* <button type="button" class="btn btn-secondary clearBook" id='btnСlose' data-bs-dismiss="modal">Закрыть</button> */%>
+            <button class="btn btn-primary b-2" id='btnСlose'>Ура!</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+        <!-- <a class="btn btn-primary btnFirst" data-bs-toggle="modal" role="button">Основная кнопка</a> -->
 </body>
 
 </main>
