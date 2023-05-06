@@ -277,6 +277,7 @@ document.addEventListener("DOMContentLoaded", () => {
           },
         })
         .then(function (resp) {
+          location.replace(location.href);
           console.log("respresp", resp);
           if (resp.data == "-1") {
             console.log("TOTAL ERROR");
@@ -335,6 +336,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // console.log(document.querySelectorAll(".btn-close"));
   let clickedIdForDel = -1;
   let targetIdForDel = -1;
+  let rowForUpd = -1;
 
   document.querySelector(".table").onclick = function (event) {
     let target = event.target; // где был клик ?
@@ -343,7 +345,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let confirmationDeleteModelBody = document.getElementById(
       "confirmationDeleteModelBody"
     );
-    console.log("confirm", confirmationDeleteModelBody);
+    console.log("confirm that thai", confirmationDeleteModelBody);
 
     if (target.classList.value === "btn-close") {
       let TeacherOfClickedLesson =
@@ -376,7 +378,7 @@ document.addEventListener("DOMContentLoaded", () => {
       /* regular cells have one class (cell)
        * header cells have two classes (cell, title)
        */
-      let rowForUpd = target.parentElement;
+      rowForUpd = target.parentElement;
       let rowForUpdId = target.parentElement.children[0].innerHTML;
       let rowForUpdDt = target.parentElement.attributes[1].value;
       let rowForUpdTime = target.parentElement.attributes[2].value;
@@ -387,7 +389,8 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log(
         "TARGETTTT",
         target.parentElement.attributes[1].value,
-        target.parentElement.attributes[2].value
+        target.parentElement.attributes[2].value,
+        rowForUpd
       );
       console.log(
         rowForUpdId,
@@ -485,7 +488,10 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         // .delete("http://localhost:3001/api/lessons", { date: "helloVera!!!" })
         .then(function (resp) {
-          console.log("прилетело", resp);
+          console.log("прилетело", resp.data);
+          closeModal("updateLesson");
+          // rowForUpd.children[0].innerHTML;
+          location.replace(location.href);
           // confirmationDeleteModelBody.children[0].innerHTML =
           //   "Вы уверены, что хотите удалить занятие ";
           // closeModal("confirmation");
