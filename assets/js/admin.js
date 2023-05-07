@@ -20,6 +20,9 @@ function masks() {
   });
 }
 
+// let TIMEREGEX = /^([1][0-9]|[2][0-4]):[0-5][0-9]$/;
+let TIMEREGEX = /^(?:[01]\d|2[0-3]):[0-5]\d$/;
+
 document.addEventListener("DOMContentLoaded", () => {
   masks();
 });
@@ -199,8 +202,6 @@ document.addEventListener("DOMContentLoaded", () => {
       );
       console.log("current value", el.value);
 
-      let timeRegEx = /^([1][0-9]|[2][0-4]):[0-5][0-9]$/;
-
       console.log("Stage 3. Hall ", hallSelect !== "Зал", hallSelect.value);
 
       /*
@@ -231,7 +232,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("Stage 3.1 not", checksWerePassed);
       }
 
-      if (timeRegEx.test(el.value)) {
+      if (TIMEREGEX.test(el.value)) {
         console.log("Stage 4.1 yes", checksWerePassed);
 
         inputForTime[idx].classList.remove("is-invalid");
@@ -288,20 +289,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  document.querySelector(".btnAddTeacher").onclick = function (event) {
-    const form = document.querySelector("#addTeacherForm");
-    const formDate = new FormData(form);
-    console.log("hereeeee", formDate);
-    axios
-      .patch("http://localhost:3001/api/teachers", formDate, {
-        headers: {
-          "Content-Type": "multipart/form-date",
-        },
-      })
-      .then(function (resp) {
-        console.log("Я добавил");
-      });
-  };
+  // document.querySelector(".btnAddTeacher").onclick = function (event) {
+  //   const form = document.querySelector("#addTeacherForm");
+  //   const formDate = new FormData(form);
+  //   console.log("hereeeee", formDate);
+  //   axios
+  //     .patch("http://localhost:3001/api/teachers", formDate, {
+  //       headers: {
+  //         "Content-Type": "multipart/form-date",
+  //       },
+  //     })
+  //     .then(function (resp) {
+  //       console.log("Я добавил");
+  //     });
+  // };
 });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -474,32 +475,57 @@ document.addEventListener("DOMContentLoaded", () => {
     .getElementById("updateLessonBtn")
     .addEventListener("click", (eventUpd) => {
       console.log("eventUpd", eventUpd);
+      let checksWerePassed = true;
 
-      console.log("clickedIdForUpd");
-      console.log("Сейчас полетит аксиос");
+      // Check
+      // 1. time
+      // 2. tp lesson
+
+      let timeFromInput = document.getElementById("idLessonTime");
+      console.log(timeFromInput.value);
+      if (TIMEREGEX.test(timeFromInput.value)) {
+        timeFromInput.classList.remove("is-invalid");
+        checksWerePassed = checksWerePassed == false ? false : true;
+      } else {
+        timeFromInput.classList.add("is-invalid");
+        checksWerePassed = false;
+      }
+
+      let tpLessonInput = document.getElementById("idTpLesson");
+      console.log(tpLessonInput.value, tpLessonInput.value == "_____");
+      if (tpLessonInput.value !== "_____") {
+        tpLessonInput.classList.remove("is-invalid");
+        checksWerePassed = checksWerePassed == false ? false : true;
+      } else {
+        tpLessonInput.classList.add("is-invalid");
+        checksWerePassed = false;
+      }
+
       let formDate = new FormData(document.getElementById("updateLessonForm"));
+      if (checksWerePassed == true) {
+        axios
+          .post("http://localhost:3001/api/lessons", formDate, {
+            headers: {
+              "Content-Type": "multipart/form-date",
+            },
+          })
+          // .delete("http://localhost:3001/api/lessons", { date: "helloVera!!!" })
+          .then(function (resp) {
+            console.log("прилетело", resp.data);
+            closeModal("updateLesson");
+            location.replace(location.href); // ----------
 
-      // console.log(form);
-      axios
-        .post("http://localhost:3001/api/lessons", formDate, {
-          headers: {
-            "Content-Type": "multipart/form-date",
-          },
-        })
-        // .delete("http://localhost:3001/api/lessons", { date: "helloVera!!!" })
-        .then(function (resp) {
-          console.log("прилетело", resp.data);
-          closeModal("updateLesson");
-          // rowForUpd.children[0].innerHTML;
-          location.replace(location.href);
-          // confirmationDeleteModelBody.children[0].innerHTML =
-          //   "Вы уверены, что хотите удалить занятие ";
-          // closeModal("confirmation");
-          // targetIdForDel.remove();
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+            // rowForUpd.children[0].innerHTML;
+
+            // confirmationDeleteModelBody.children[0].innerHTML =
+            //   "Вы уверены, что хотите удалить занятие ";
+            // closeModal("confirmation");
+            // targetIdForDel.remove();
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
     });
 });
 
