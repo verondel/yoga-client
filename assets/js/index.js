@@ -182,6 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     })
                     .then(function (resp) {
                       console.log("кто-то купил абонемент");
+                      closeModal("buySubscrition")
                       bookLogic(
                         flag,
                         response,
@@ -409,6 +410,8 @@ function openModal(id) {
       "afterend",
       '<div class="modal-backdrop fade show" id="delMeToClose"></div>'
     );
+    console.log('bodyyyy', document.getElementById("hidden"))
+    document.getElementById("hidden").style.overflow = "hidden"
 }
 
 function closeModal(id) {
@@ -428,6 +431,7 @@ function closeModal(id) {
   modal.classList.remove("show");
   modal.style.display = "none";
   document.body.classList.remove("modal-open");
+  document.getElementById("hidden").style.overflow = "auto"
 
   // let modalBackdrop = document.querySelector(".modal-backdrop");
   // console.log("modalBackdrop", modalBackdrop);
