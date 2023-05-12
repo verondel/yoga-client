@@ -182,7 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     })
                     .then(function (resp) {
                       console.log("кто-то купил абонемент");
-                      closeModal("buySubscrition")
+                      closeModal("buySubscrition");
                       bookLogic(
                         flag,
                         response,
@@ -358,7 +358,9 @@ function registrationLogic(
           let spanTeacher = document.getElementById("teacherFirstLesson");
           spanTeacher.innerHTML = strTeacher;
 
-          document.querySelector(".btnFirstBookModal").onclick = function () {
+          document.querySelector(".btnFirstBookModal").onclick = function (
+            event
+          ) {
             console.log(
               "smb has just pressed btnFirstBookModal, next is api/book"
             );
@@ -381,9 +383,11 @@ function registrationLogic(
                 spanClient.innerHTML = name;
                 console.log("everything there", spanClient, name);
 
-                document.querySelector(".btnFirstBookModal").onclick =
-                  function () {
+                document.querySelector(".btnWaitingYouModal").onclick =
+                  function (event) {
                     closeModal("waitingYouModal");
+                    console.log("replace--------");
+                    location.replace(location.href);
                   };
               });
           };
@@ -410,8 +414,7 @@ function openModal(id) {
       "afterend",
       '<div class="modal-backdrop fade show" id="delMeToClose"></div>'
     );
-    console.log('bodyyyy', document.getElementById("hidden"))
-    document.getElementById("hidden").style.overflow = "hidden"
+  document.getElementById("hidden").style.overflow = "hidden";
 }
 
 function closeModal(id) {
@@ -431,7 +434,7 @@ function closeModal(id) {
   modal.classList.remove("show");
   modal.style.display = "none";
   document.body.classList.remove("modal-open");
-  document.getElementById("hidden").style.overflow = "auto"
+  document.getElementById("hidden").style.overflow = "auto";
 
   // let modalBackdrop = document.querySelector(".modal-backdrop");
   // console.log("modalBackdrop", modalBackdrop);
@@ -515,8 +518,10 @@ function bookLogic(
           let spanClient = document.getElementById("clientNameWaiting");
           spanClient.innerHTML = clientName;
 
-          document.querySelector(".btnFirstBookModal").onclick = function () {
+          document.querySelector(".btnWaitingYouModal").onclick = function () {
             closeModal("waitingYouModal");
+            console.log("replace--------");
+            location.replace(location.href);
           };
         });
     });
