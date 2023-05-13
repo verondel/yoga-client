@@ -22,23 +22,23 @@ document.addEventListener("DOMContentLoaded", () => {
   let mask = new IMask(element, maskOptions);
 });
 
-const eventSource = new EventSource("http://localhost:3001/sse-endpoint");
-eventSource.onmessage = console.log;
+// const eventSource = new EventSource("http://localhost:3001/sse-endpoint");
+// eventSource.onmessage = console.log;
 
-document.addEventListener("DOMContentLoaded", () => {
-  eventSource.addEventListener("message", (event) => {
-    console.log("Получено новое сообщение:", event.data);
-    if (event.data == "1") {
-      location.replace(location.href);
-    }
-  });
-  eventSource.addEventListener("open", () => {
-    console.log("Соединение установлено");
-  });
-  eventSource.addEventListener("error", (event) => {
-    console.error("Ошибка соединения:", event);
-  });
-});
+// document.addEventListener("DOMContentLoaded", () => {
+//   eventSource.addEventListener("message", (event) => {
+//     console.log("Получено новое сообщение:", event.data);
+//     if (event.data == "1") {
+//       location.replace(location.href);
+//     }
+//   });
+//   eventSource.addEventListener("open", () => {
+//     console.log("Соединение установлено");
+//   });
+//   eventSource.addEventListener("error", (event) => {
+//     console.error("Ошибка соединения:", event);
+//   });
+// });
 
 document.addEventListener("DOMContentLoaded", () => {
   let flag = 0;
