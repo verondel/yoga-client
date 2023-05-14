@@ -465,6 +465,7 @@ document.addEventListener("DOMContentLoaded", () => {
             "Вы уверены, что хотите удалить занятие ";
           closeModal("confirmation");
           targetIdForDel.remove();
+          location.replace(location.href);
         })
         .catch(function (error) {
           console.log(error);
