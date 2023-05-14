@@ -22,23 +22,27 @@ document.addEventListener("DOMContentLoaded", () => {
   let mask = new IMask(element, maskOptions);
 });
 
-// const eventSource = new EventSource("http://localhost:3001/sse-endpoint");
-// eventSource.onmessage = console.log;
+// -----------------------------------------------------------------
 
-// document.addEventListener("DOMContentLoaded", () => {
-//   eventSource.addEventListener("message", (event) => {
-//     console.log("Получено новое сообщение:", event.data);
-//     if (event.data == "1") {
-//       location.replace(location.href);
-//     }
-//   });
-//   eventSource.addEventListener("open", () => {
-//     console.log("Соединение установлено");
-//   });
-//   eventSource.addEventListener("error", (event) => {
-//     console.error("Ошибка соединения:", event);
-//   });
-// });
+const eventSource = new EventSource("http://localhost:3001/sse-endpoint");
+eventSource.onmessage = console.log;
+
+document.addEventListener("DOMContentLoaded", () => {
+  eventSource.addEventListener("message", (event) => {
+    // console.log("Получено новое сообщение:", event.data);
+    if (event.data == "1") {
+      location.replace(location.href);
+    }
+  });
+  eventSource.addEventListener("open", () => {
+    // console.log("Соединение установлено");
+  });
+  eventSource.addEventListener("error", (event) => {
+    // console.error("Ошибка соединения:", event);
+  });
+});
+
+// -----------------------------------------------------------------
 
 document.addEventListener("DOMContentLoaded", () => {
   let flag = 0;
@@ -400,7 +404,6 @@ function registrationLogic(
                 document.querySelector(".btnWaitingYouModal").onclick =
                   function (event) {
                     closeModal("waitingYouModal");
-                    console.log("replace--------");
                     location.replace(location.href);
                   };
               });
@@ -442,20 +445,12 @@ function closeModal(id) {
       "         NXT NXT",
       document.querySelector(".container").nextSibling.id
     );
-    // document.querySelector("#delMeToClose")
     document.querySelector(".container").nextSibling.remove();
   }
   modal.classList.remove("show");
   modal.style.display = "none";
   document.body.classList.remove("modal-open");
   document.getElementById("hidden").style.overflow = "auto";
-
-  // let modalBackdrop = document.querySelector(".modal-backdrop");
-  // console.log("modalBackdrop", modalBackdrop);
-  // if (modalBackdrop !== null) {
-
-  // .classList.remove("modal-backdrop", "fade", "show");
-  // }
 }
 
 function bookLogic(
