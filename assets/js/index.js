@@ -187,11 +187,12 @@ document.addEventListener("DOMContentLoaded", () => {
               document
                 .querySelector(".subscriptionModal")
                 .addEventListener("click", () => {
-                  /// VERA HERE WE ARE
                   const form = document.querySelector("#subsctiptionForm");
                   const formData = new FormData(form);
                   formData.append("id_client", id_client);
                   formData.append("dtLesson", dtTd);
+
+                  // axios output: dt_begin, dt_end, amount
                   axios
                     .patch("http://localhost:3001/api/subsctiption", formData, {
                       headers: {
@@ -201,6 +202,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     .then(function (resp) {
                       console.log("кто-то купил абонемент");
                       closeModal("buySubscrition");
+                      console.log("resp data", resp.data);
+                      dt_begin = new Date(resp.data.dt_begin);
+                      dt_end = new Date(resp.data.dt_end);
+                      amount = +resp.data.amount;
+                      console.log("MS amount", amount);
+
                       bookLogic(
                         flag,
                         response,
@@ -491,7 +498,7 @@ function bookLogic(
     let dt_beginLS = dt_begin.toLocaleDateString("ru-RU", options);
     let dt_endLS = dt_end.toLocaleDateString("ru-RU", options);
 
-    document.getElementById("amount").innerHTML = `${response.data[0].amount}`;
+    document.getElementById("amount").innerHTML = `${amount}`;
 
     document.getElementById("startDt").value = `${dt_beginLS}`;
     document.getElementById("endDt").value = `${dt_endLS}`;
