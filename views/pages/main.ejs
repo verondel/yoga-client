@@ -567,7 +567,7 @@
 
               <div class="ps-3 pe-3 pt-3">
                 <label for="nameModal">ФИО</label>
-                <input type="text" name="fullName" class="form-control names" id="nameMask"  required>  
+                <input type="text" name="fullName" class="form-control names" id="nameMask" placeholder="Иванов Иван Иванович"  required>  
               </div>
 
               <div class="ps-3 pe-3 pt-3">
@@ -582,7 +582,7 @@
 
               <div class="ps-3 pe-3 pt-3">
                 <label for="email">Email</label>
-                <input type="text" name="email" class="form-control" id="email" required>
+                <input type="text" name="email" class="form-control" id="emailRegistration" placeholder="ivanov@mail.ru" required>
               </div>
 
               <div class="ps-3 pe-3 pt-4">
@@ -742,7 +742,7 @@
               </form>
             </div>
             <div class="modal-footer">
-              <%/*<button type="button" class="btn btn-secondary " id='btnСlose' data-bs-dismiss="modal">Закрыть</button> */%>
+              <button type="button" class="btn btn-secondary " id='btnСlose' data-bs-dismiss="modal">Закрыть</button>
               <button class="btn btn-primary b-2 subscriptionModal">Подтвердить</button>
             </div>
           </div>
@@ -797,5 +797,8 @@
 </footer>
 
 </b>
+<div style="visibility: hidden;" id="idOfPage">
+  <%= hash %>
+</div>
 
 </html>

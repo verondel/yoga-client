@@ -1,8 +1,11 @@
 // const { default: axios } = require("axios");
+let FULLNAMEREGEX = /^[a-zA-Zа-яА-Я]+ [a-zA-Zа-яА-Я]+( [a-zA-Zа-яА-Я]+)?$/;
+let UNDERSCOREREGEX = /^[^_]*$/;
+let EMAILREGEXP = /^[A-Za-z]+@[A-Za-z]+\.[A-Za-z]+$/;
+///[\p{L}]+(\s[\p{L}]+){1,2}$/;
 
 document.addEventListener("DOMContentLoaded", () => {
   let element = document.getElementById("phoneMask");
-  // console.log('h',element)
   let maskOptions = {
     mask: "+7(000)000-00-00",
     lazy: false,
@@ -12,7 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.addEventListener("DOMContentLoaded", () => {
   let element = document.getElementById("dtBirth");
-  console.log("h", element);
   let maskOptions = {
     mask: Date,
     min: new Date(1930, 0, 1),
@@ -22,16 +24,24 @@ document.addEventListener("DOMContentLoaded", () => {
   let mask = new IMask(element, maskOptions);
 });
 
-// -----------------------------------------------------------------
-
 const eventSource = new EventSource("http://localhost:3001/sse-endpoint");
-eventSource.onmessage = console.log;
+// eventSource.onmessage = console.log;
 
 document.addEventListener("DOMContentLoaded", () => {
+  let idOfPage = document
+    .getElementById("idOfPage")
+    .innerHTML.replace(/\s/g, "");
+  console.log("idOfPage", idOfPage);
+
   eventSource.addEventListener("message", (event) => {
-    // console.log("Получено новое сообщение:", event.data);
-    if (event.data == "1") {
+    const serializedObject = event.data; // Serialized object string received from the SSE message
+    const parsedObject = JSON.parse(serializedObject);
+
+    console.log("Получено новое сообщение:", parsedObject[idOfPage]);
+    // получить таблицу
+    if (parsedObject[idOfPage] == 1) {
       location.replace(location.href);
+      // location.reload();
     }
   });
   eventSource.addEventListener("open", () => {
@@ -42,8 +52,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// -----------------------------------------------------------------
-
 document.addEventListener("DOMContentLoaded", () => {
   let flag = 0;
   let axiosFlag = false;
@@ -53,8 +61,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let target = event.target; // где был клик?
     globalTarget = event.target;
-    console.log("1.0 - ", event);
-    console.log("1.1 - ATTRIBUTES", target.attributes.id.value);
+    // console.log("1.0 - ", event);
+    // console.log("1.1 - ATTRIBUTES", target.attributes.id.value);
     // console.log(Object.values(target.attributes).includes("id"));
 
     if (
@@ -62,32 +70,18 @@ document.addEventListener("DOMContentLoaded", () => {
       Object.values(target.attributes).length > 2
     ) {
       openModal("phoneModal");
-      // let id_lesson = target.attributes.id.value;
-      // let id_tp_lesson = target.attributes.id_tp_lesson.value;
-      // let strDt = target.attributes.strdt.value;
-      // let strTime = target.attributes.strtime.value;
-      // let strTeacher = target.attributes.strteacher.value;
-      // let tp_lesson = target.attributes.tp_lesson.value;
-
-      // let newStrDt = strDt.split("").join("");
-      // console.log("     2.01 - ", strDt, "  before btnPhoneModal ");
-      // console.log("        newStrDt", newStrDt);
-
-      // if (axiosCounter == 0) {
-      // if (!axiosFlag) {
 
       document
         .querySelector(".btnPhoneModal")
         .removeEventListener("click", main);
 
       document.querySelector(".btnPhoneModal").addEventListener("click", main);
-      // }
-      // axiosFlag = true;
     }
   };
 
   function main() {
-    console.log(globalTarget);
+    document.querySelector(".btnPhoneModal").removeEventListener("click", main);
+    // console.log(globalTarget);
     let target = globalTarget;
     let id_lesson = target.attributes.id.value;
     let id_tp_lesson = target.attributes.id_tp_lesson.value;
@@ -98,17 +92,14 @@ document.addEventListener("DOMContentLoaded", () => {
     let strTeacher = target.attributes.strteacher.value;
     let tp_lesson = target.attributes.tp_lesson.value;
 
-    // let newStrDt = strDt.split("").join("");
-    // axiosCounter += 1;
     let phone = document.querySelector(".i-1").value;
 
-    console.log("     2.1 - ", strDt, "  before axios "); // newStrDt,
+    // console.log("     2.1 - ", strDt, "  before axios "); // newStrDt,
     patternPhone = /^\+7\([0-9]{3}\)[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/;
 
     if (patternPhone.test(phone)) {
-      // && newStrDt == strDt
       closeModal("phoneModal");
-      console.log("     2.2 - ", strDt, "  before axios ");
+      // console.log("     2.2 - ", strDt, "  before axios ");
 
       // Axios: поиск в базе клиента по номеру телефона,
       // output = s.dt_begin, s.dt_end, s.amount, c.full_name, c.id, c.phone
@@ -119,8 +110,8 @@ document.addEventListener("DOMContentLoaded", () => {
           },
         })
         .then(function (response) {
-          console.log("     2.3 - ", strDt, "  after axios ");
-          console.log("response data length = ", response.data);
+          // console.log("     2.3 - ", strDt, "  after axios ");
+          // console.log("response data length = ", response.data);
 
           // Клиента с введенным номером телефона не существует
           if (response.data == -1) {
@@ -169,62 +160,67 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
               // Абонемент недействителен
               openModal("buySubscrition");
-              console.log(dtTdTS <= dt_endTS, dtTdTS >= dt_beginTS, amount > 0);
+              // console.log(dtTdTS <= dt_endTS, dtTdTS >= dt_beginTS, amount > 0);
               let problemSpan = document.getElementById("problem");
 
               if (!(dtTdTS >= dt_beginTS)) {
                 problemSpan.innerHTML =
                   "Ваш абонемент ещё не начал действовать";
-                console.log("Абонемент ещё не начал действовать");
+                // console.log("Абонемент ещё не начал действовать");
               } else if (!(dtTdTS <= dt_endTS)) {
-                console.log("Срок действия истек");
+                // console.log("Срок действия истек");
                 problemSpan.innerHTML = "Cрок действия Вашего абонемента истек";
               } else if (amount <= 0) {
-                console.log("Количество занятий закончилось");
+                // console.log("Количество занятий закончилось");
                 problemSpan.innerHTML =
                   "Количество занятий на Вашем абонементе закончилось";
               }
+
+              function subscrib() {
+                const form = document.querySelector("#subsctiptionForm");
+                const formData = new FormData(form);
+                formData.append("id_client", id_client);
+                formData.append("dtLesson", dtTd);
+
+                // axios output: dt_begin, dt_end, amount
+                axios
+                  .patch("http://localhost:3001/api/subsctiption", formData, {
+                    headers: {
+                      "Content-Type": "multipart/form-date",
+                    },
+                  })
+                  .then(function (resp) {
+                    // console.log("кто-то купил абонемент");
+                    closeModal("buySubscrition");
+                    // console.log("resp data", resp.data);
+                    dt_begin = new Date(resp.data.dt_begin);
+                    dt_end = new Date(resp.data.dt_end);
+                    amount = +resp.data.amount;
+                    // console.log("MS amount", amount);
+                    document
+                      .querySelector(".subscriptionModal")
+                      .removeEventListener("click", subscrib);
+
+                    bookLogic(
+                      flag,
+                      response,
+                      dt_begin,
+                      dt_end,
+                      tp_lesson,
+                      strDt,
+                      strTime,
+                      strTeacher,
+                      id_client,
+                      id_lesson,
+                      dtTd,
+                      amount,
+                      clientName
+                    );
+                  });
+              }
               document
                 .querySelector(".subscriptionModal")
-                .addEventListener("click", () => {
-                  const form = document.querySelector("#subsctiptionForm");
-                  const formData = new FormData(form);
-                  formData.append("id_client", id_client);
-                  formData.append("dtLesson", dtTd);
-
-                  // axios output: dt_begin, dt_end, amount
-                  axios
-                    .patch("http://localhost:3001/api/subsctiption", formData, {
-                      headers: {
-                        "Content-Type": "multipart/form-date",
-                      },
-                    })
-                    .then(function (resp) {
-                      console.log("кто-то купил абонемент");
-                      closeModal("buySubscrition");
-                      console.log("resp data", resp.data);
-                      dt_begin = new Date(resp.data.dt_begin);
-                      dt_end = new Date(resp.data.dt_end);
-                      amount = +resp.data.amount;
-                      console.log("MS amount", amount);
-
-                      bookLogic(
-                        flag,
-                        response,
-                        dt_begin,
-                        dt_end,
-                        tp_lesson,
-                        strDt,
-                        strTime,
-                        strTeacher,
-                        id_client,
-                        id_lesson,
-                        dtTd,
-                        amount,
-                        clientName
-                      );
-                    });
-                });
+                .addEventListener("click", subscrib);
             }
             // console.log('sec', lessonModal)
           }
@@ -243,17 +239,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.querySelectorAll("#btnСlose").forEach(function (el) {
     el.addEventListener("click", (event) => {
-      console.log(
-        "------------------------------------------------------------"
-      );
       let target = event.target;
       let closestModel = target.closest(".modal");
-
-      console.log(target.classList.value);
       if (target.classList.value.includes("clearBook")) {
         document.getElementById("bookLesson").innerHTML = "";
       }
-      // console.log("cmID", closestModel.id);
       closeModal(closestModel.id);
     });
   });
@@ -267,17 +257,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// table ВСПЛЫТИЕ
-document.addEventListener("DOMContentLoaded", () => {
-  // document.getElementById("table").onclick = function (event) {
-  //   let target = event.target; // где был клик?
-  //   if (target.tagName == "DIV") {
-  //     console.log(target);
-  //   } // не на TD? тогда не интересует
-  //   // highlight(target); // подсветить TD
-  // };
-});
-
 function registrationLogic(
   strDt,
   strTime,
@@ -288,23 +267,13 @@ function registrationLogic(
 ) {
   let newPhone = document.querySelector(".i-1").value;
   document.getElementById("staticPhoneInRegistration").value = newPhone;
-  console.log(document.getElementById("staticPhoneInRegistration"));
 
-  // todo маска для ФИО
   let passport = document.getElementById("passportMask");
-  console.log("h", passport);
   let maskOptions = {
     mask: "0000 000000",
     lazy: false,
   };
   let mask = new IMask(passport, maskOptions);
-
-  // const phoneModal = document.getElementById("phoneModal");
-  // phoneModal.classList.remove("show"); // add?
-  // phoneModal.style.display = "none";
-  // document.body.classList.remove("modal-open");
-
-  console.log("тут могла бы быть ваша регистрация");
 
   document.querySelector("#btnRegistration").onclick = function (event) {
     const form = document.querySelector("#registrationForm");
@@ -314,38 +283,63 @@ function registrationLogic(
 
     for (const key of formData.keys()) {
       formDataKeys.push(key);
-      console.log(key);
     }
     let fullNameInput = document.getElementById("nameMask");
     let dtBirth = document.getElementById("dtBirth");
+    let passport = document.getElementById("passportMask");
+    let email = document.getElementById("emailRegistration");
     let agreementCheckBox = document.getElementById("agreementCheckBox");
-    console.log(agreementCheckBox);
+
     /* Валидация
      * 1. Введено ли ФИО
-     * 2. TODO: Дата рождения
+     * 2. Дата рождения
      * 3. TODO: Серия и номер паспорта
      * 4. TODO: email
      * 5. Согласие на обработку
      */
 
-    if (fullNameInput.value !== "") {
+    if (FULLNAMEREGEX.test(fullNameInput.value)) {
       fullNameInput.classList.remove("is-invalid");
       checksWerePassed = checksWerePassed == false ? false : true;
-      console.log("Stage 1 - yes", checksWerePassed);
+      // console.log("Stage 1 - yes", checksWerePassed);
     } else {
       fullNameInput.classList.add("is-invalid");
       checksWerePassed = false;
-      console.log("Stage 1 - no", checksWerePassed);
+      // console.log("Stage 1 - no", checksWerePassed);
+    }
+
+    if (UNDERSCOREREGEX.test(dtBirth.value)) {
+      dtBirth.classList.remove("is-invalid");
+      checksWerePassed = checksWerePassed == false ? false : true;
+    } else {
+      dtBirth.classList.add("is-invalid");
+      checksWerePassed = false;
+    }
+
+    if (UNDERSCOREREGEX.test(passport.value)) {
+      passport.classList.remove("is-invalid");
+      checksWerePassed = checksWerePassed == false ? false : true;
+    } else {
+      passport.classList.add("is-invalid");
+      checksWerePassed = false;
+    }
+
+    if (EMAILREGEXP.test(email.value)) {
+      email.classList.remove("is-invalid");
+      checksWerePassed = checksWerePassed == false ? false : true;
+    } else {
+      email.classList.add("is-invalid");
+      checksWerePassed = false;
     }
 
     if (agreementCheckBox.checked !== false) {
       agreementCheckBox.classList.remove("is-invalid");
       checksWerePassed = checksWerePassed == false ? false : true;
-      console.log("Stage 2 - yes", checksWerePassed);
+      // console.log("Stage 2 - yes", checksWerePassed);
     } else {
       agreementCheckBox.classList.add("is-invalid");
       checksWerePassed = false;
-      console.log("Stage 2 - no", checksWerePassed);
+      // console.log("Stage 2 - no", checksWerePassed);
     }
 
     let formDataUniqueKeys = new Set(formDataKeys);
@@ -363,7 +357,7 @@ function registrationLogic(
           },
         })
         .then(function (resp) {
-          console.log("respresp", resp.data);
+          // console.log("respresp", resp.data);
           closeModal("registrationModal");
 
           let id = resp.data.id;
@@ -386,9 +380,6 @@ function registrationLogic(
           document.querySelector(".btnFirstBookModal").onclick = function (
             event
           ) {
-            console.log(
-              "smb has just pressed btnFirstBookModal, next is api/book"
-            );
             // add subscribtion, add book for TRIAL LESSON
             axios
               .patch("http://localhost:3001/api/book", {
@@ -406,7 +397,7 @@ function registrationLogic(
 
                 let spanClient = document.getElementById("clientNameWaiting");
                 spanClient.innerHTML = name;
-                console.log("everything there", spanClient, name);
+                // console.log("everything there", spanClient, name);
 
                 document.querySelector(".btnWaitingYouModal").onclick =
                   function (event) {
@@ -423,13 +414,10 @@ function registrationLogic(
 }
 
 function openModal(id) {
-  // axiosCounter = 1;
-  console.log("2.0 - OM", id);
   const modal = document.getElementById(id);
   modal.classList.toggle("show");
   modal.style.display = "block";
   document.body.classList.add("modal-open");
-
   // let newDiv = document.createElement("div");
   // newDiv.classList.add("modal-backdrop", "fade", "show");
   document
@@ -443,15 +431,11 @@ function openModal(id) {
 
 function closeModal(id) {
   flag = 0;
-  console.log("CLOSE MODAL");
+  // console.log("CLOSE MODAL");
   const modal = document.getElementById(id);
   while (
     document.querySelector(".container").nextSibling.id == "delMeToClose"
   ) {
-    console.log(
-      "         NXT NXT",
-      document.querySelector(".container").nextSibling.id
-    );
     document.querySelector(".container").nextSibling.remove();
   }
   modal.classList.remove("show");
@@ -513,9 +497,16 @@ function bookLogic(
     spanTeacher.innerHTML = `${strTeacher}`;
 
     // console.log(tp_lesson, strDt, strTime, strTeacher);
-    document.querySelector(".btnBookModal").addEventListener("click", () => {
+    document
+      .querySelector(".btnBookModal")
+      .addEventListener("click", bookModal);
+
+    function bookModal() {
       console.log("not first book in your life ");
       let trialLesson = false;
+      document
+        .querySelector(".btnBookModal")
+        .removeEventListener("click", bookModal);
       axios
         .patch("http://localhost:3001/api/book", {
           data: {
@@ -528,20 +519,23 @@ function bookLogic(
           },
         })
         .then(function (resp) {
-          console.log("resp after booking lesson", resp);
+          // console.log("resp after booking lesson", resp);
           closeModal("lessonModal");
           openModal("waitingYouModal");
           let spanClient = document.getElementById("clientNameWaiting");
           spanClient.innerHTML = clientName;
 
-          document.querySelector(".btnWaitingYouModal").onclick = function () {
+          document.querySelector(".btnWaitingYouModal").onclick = closeWaiting;
+
+          function closeWaiting() {
             closeModal("waitingYouModal");
-            console.log("replace--------");
-            location.replace(location.href);
-          };
+            document
+              .querySelector(".btnWaitingYouModal")
+              .removeEventListener("click", closeWaiting);
+            location.reload();
+          }
         });
-    });
-    // document.getElementById('amount').value = `${response.data[0].amount}`
+    }
   }
 }
 
@@ -551,7 +545,6 @@ function bookLogic(
 
   // Получите все формы, к которым мы хотим применить пользовательские стили проверки Bootstrap
   var forms = document.querySelectorAll(".needs-validation");
-  // console.log('forms', forms)
 
   // Зацикливайтесь на них и предотвращайте отправку
   Array.prototype.slice.call(forms).forEach(function (form) {
@@ -569,27 +562,3 @@ function bookLogic(
     );
   });
 })();
-
-// Делаем запрос пользователя с данным ID
-// axios.get('/user?ID=hello')
-//   .then(function (response) {
-//     // обработка успешного запроса
-//     console.log(response);
-//   })
-//   .catch(function (error) {
-//     // обработка ошибки
-//     console.log(error);
-//   })
-//   .finally(function () {
-//     // выполняется всегда
-//   });
-
-// Хотите использовать async/await? Добавьте ключевое слово `async` к своей внешней функции/методу.
-// async function getUser() {
-//   try {
-//     const response = await axios.get('http://localhost:3001/users?ID=1');
-//     console.log(response.data);
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }

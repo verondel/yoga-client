@@ -1,5 +1,6 @@
 const express = require("express");
 const axios = require("axios");
+const CryptoJS = require("crypto-js");
 
 const app = express();
 const port = 3000;
@@ -53,21 +54,7 @@ app.get("/", (req, res) => {
       },
     })
     .then(function (resp) {
-      console.log(resp.data);
-      // let months = [
-      //   "янв",
-      //   "фев",
-      //   "мар",
-      //   "апр",
-      //   "май",
-      //   "июн",
-      //   "июл",
-      //   "авг",
-      //   "сен",
-      //   "окт",
-      //   "ноя",
-      //   "дек",
-      // ];
+      // console.log(resp.data);
       let hoursForTable = [
         "08:00",
         "09:00",
@@ -85,52 +72,6 @@ app.get("/", (req, res) => {
         "21:00",
       ];
 
-      // let minutesForTable = ["0", "15", "30", "45"];
-
-      // const currentDay = new Date();
-      // let todayDate = currentDay.getDate();
-      // let todayMonth = months[currentDay.getMonth()];
-      // let todayStr = todayDate + " " + todayMonth;
-
-      // while (currentDay.getDay() !== 1) {
-      //   currentDay.setDate(currentDay.getDate() - 1); // минус 1 день
-      // }
-
-      // let monday = new Date(currentDay);
-      // let mondayItterable = new Date(currentDay.setHours(3, 0, 0));
-
-      // mondayItterable.setDate(currentDay.getDate() - 1);
-      // let timeschtampForTd = [];
-
-      // // генерация массива со всеми class для td
-      // hoursForTable.forEach((time) => {
-      //   mondayItterable.setHours(time.slice(0, 2));
-      //   minutesForTable.forEach((minutes) => {
-      //     for (i = 0; i < 7; i++) {
-      //       mondayItterable.setDate(mondayItterable.getDate() + 1);
-      //       mondayItterable.setMinutes(minutes);
-      //       let newDt = new Date(mondayItterable);
-      //       timeschtampForTd.push(newDt);
-      //     }
-      //     mondayItterable.setDate(mondayItterable.getDate() - 7);
-      //   });
-      // });
-      // // console.log(timeschtampForTd);
-
-      // let mondayNumber = currentDay.getDate();
-      // let mondayMonth = months[currentDay.getMonth()];
-      // let datesOfCurrentWeek = [];
-      // datesOfCurrentWeek.push(mondayNumber + " " + mondayMonth);
-
-      // for (let i = 0; i < 6; i++) {
-      //   monday.setDate(monday.getDate() + 1);
-      //   let nextDay = new Date(monday);
-      //   let day = nextDay.getDate();
-      //   datesOfCurrentWeek.push(day + " " + months[monday.getMonth()]);
-      // }
-
-      // // console.log(datesOfCurrentWeek);
-
       let counter = 0;
       res.render("pages/main", {
         tp_lessons: resp.data.tp_lessons, // all types of lessons
@@ -141,6 +82,7 @@ app.get("/", (req, res) => {
         daysOfWeekLong: DAYSOFWEEKLONG,
         hoursForTable: hoursForTable,
         counter: counter,
+        hash: resp.data.hash,
         // lessons
       });
     });
