@@ -11,17 +11,18 @@ function masks() {
       // defaults are '0', 'a', '*'
       "#": /[0-2]/,
       "&": /[0-9]/,
-      1: /[0-5]/,
-      "*": /[0-9]/,
+      1: /[0,1,2,3,4]/,
+      "*": /[0,5]/,
     },
   };
+
   elements.forEach((element) => {
     let mask = new IMask(element, maskOptions);
   });
 }
 
-// let TIMEREGEX = /^([1][0-9]|[2][0-4]):[0-5][0-9]$/;
-let TIMEREGEX = /^(?:[01]\d|2[0-3]):[0-5]\d$/;
+// let TIMEREGEX = /^(?:[01]\d|2[0-3]):[0-5]\d$/;
+let TIMEREGEX = /^([0-1][0-9]|2[0-3]):(00|15|30|45)$/;
 
 document.addEventListener("DOMContentLoaded", () => {
   masks();
@@ -34,9 +35,9 @@ function addTeachers(whereAddTeachers, whereTakeTpLesson) {
 
   console.log("Add teachers have just got", tpLessonsSelect, teacherSelect);
 
-  // Vera, clear previous options!!!
   teacherSelect.innerHTML = '<option value="" disabled>Преподаватель</option>';
 
+  console.log("before axios");
   axios
     .get("http://localhost:3001/teachers", {
       params: {
@@ -45,6 +46,7 @@ function addTeachers(whereAddTeachers, whereTakeTpLesson) {
     })
     .then(function (response) {
       let teachersIdName = response.data;
+      console.log("teacher", teachersIdName);
 
       for (let i = 0; i < teachersIdName.length; i++) {
         var option = document.createElement("option");
@@ -54,7 +56,7 @@ function addTeachers(whereAddTeachers, whereTakeTpLesson) {
       }
     })
     .catch(function (error) {
-      console.log(error);
+      console.log("error", error);
     });
   // .finally(function () {
   //   // always executed
@@ -233,14 +235,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       if (TIMEREGEX.test(el.value)) {
-        console.log("Stage 4.1 yes", checksWerePassed);
-
         inputForTime[idx].classList.remove("is-invalid");
-        // console.log(hallSelect[idx].classList);
-        // hallSelect[idx].classList.remove("is-invalid");
-
-        let amoutOfLessons = document.getElementById("reAmount").value;
-
+        // let amoutOfLessons = document.getElementById("reAmount").value;
         for (const key of formDate.keys()) {
           formDateKeys.push(key);
         }
@@ -251,12 +247,9 @@ document.addEventListener("DOMContentLoaded", () => {
           formDateUniqueKeys,
           formDateUniqueKeys.size
         );
-        // checksWerePassed = checksWerePassed !== true ? false : true;
         checksWerePassed = checksWerePassed == false ? false : true;
-
-        // }
       } else {
-        console.log("Stage 4.1 no");
+        // console.log("Stage 4.1 no");
         inputForTime[idx].classList.add("is-invalid");
         checksWerePassed = false;
       }
@@ -433,14 +426,6 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .then(function (response) {
           console.log("resp data", response.data);
-          // let teachersIdName = response.data;
-
-          // for (let i = 0; i < teachersIdName.length; i++) {
-          //   var option = document.createElement("option");
-          //   option.text = teachersIdName[i].teacher.full_name;
-          //   option.value = teachersIdName[i].teacher.id;
-          //   teacherSelect.add(option);
-          // }
         })
         .catch(function (error) {
           console.log(error);
