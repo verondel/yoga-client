@@ -18,7 +18,6 @@ const cookierParser = require("cookie-parser");
 app.use(cookierParser("abcdef-12345"));
 
 app.get("/users", (req, res) => {
-  //res.send('Hello World!');
   axios
     .get("http://localhost:3001/users", {
       params: {
@@ -26,8 +25,6 @@ app.get("/users", (req, res) => {
       },
     })
     .then(function (resp) {
-      // console.log(resp.data);
-
       res.render("pages/index", { users: resp.data });
     })
     .catch(function (error) {
@@ -54,7 +51,6 @@ app.get("/", (req, res) => {
       },
     })
     .then(function (resp) {
-      // console.log(resp.data);
       let hoursForTable = [
         "08:00",
         "09:00",
@@ -83,8 +79,10 @@ app.get("/", (req, res) => {
         hoursForTable: hoursForTable,
         counter: counter,
         hash: resp.data.hash,
-        // lessons
       });
+    })
+    .catch(function (error) {
+      res.render("pages/error");
     });
 });
 
@@ -111,14 +109,10 @@ app.get("/logout", (req, res) => {
 });
 
 app.post("/auth", (req, res) => {
-  // console.log('скинул ', req.signedCookies.user)
-  // console.log('ВОШЕЛ В 1 IF')
   if (req.body.length == 0) {
     res.render("pages/error");
   } else {
-    // console.log(typeof(req.body.login), !req.body.password)
     if (req.body.login != "" && req.body.password != "") {
-      // console.log('передаю парамсы')
       axios
         .post("http://localhost:3001/auth", {
           params: {
@@ -127,21 +121,16 @@ app.post("/auth", (req, res) => {
           },
         })
         .then(function (resp) {
-          // console.log(resp.data.auth);
-
           if (resp.data.auth == true) {
             res.setHeader("Authorization", "Bearer " + resp.data.token);
-            // console.log('перед готов к ')
             res.cookie("user", "admin", {
               signed: true,
             });
-            // console.log('редирект на админ')
             res.redirect("http://localhost:3000/admin");
           } else {
             res.cookie("admin", {
               signed: false,
             });
-            // console.log('редирект на логин')
             res.redirect("http://localhost:3000/login");
           }
         })
@@ -160,7 +149,6 @@ app.get("/admin", (req, res) => {
   } else {
     // кука есть, проверяем ее
     if (req.signedCookies.user == "admin") {
-      // console.log('в админа')
       axios
         .get("http://localhost:3001/infoForNewLesson", {
           params: {
@@ -168,7 +156,6 @@ app.get("/admin", (req, res) => {
           },
         })
         .then(function (resp) {
-          // console.log(resp.data);
           let daysOfWeek = [
             "Moday",
             "Tuesday",
@@ -197,30 +184,16 @@ app.get("/admin", (req, res) => {
             daysOfWeekShort: DAYSOFWEEKSHORT,
             tableLessonHeaders: tableLessonHeaders,
             lessons: resp.data.lessons,
-          }); // редирект в будущую админку
+          }); // редирект в админку
         })
         .catch(function (error) {
-          console.log(error);
           res.render("pages/error");
         });
     } else {
       // кука просрочена
-      // console.log('в логин')
       res.render("pages/login");
     }
   }
-
-  // axios.get('http://localhost:3001/admin1', {
-  //   params: {
-  //     ID: 123
-  //   }
-  // })
-  // .then(function (resp) {
-  //   res.render('pages/admin1')
-  // })
-  // .catch(function (error) {
-  //   res.render('pages/error');
-  // })
 });
 
 app.listen(port, () => {

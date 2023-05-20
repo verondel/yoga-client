@@ -1,9 +1,6 @@
-// const { default: axios } = require("axios");
 let FULLNAMEREGEX = /^[a-zA-Zа-яА-Я]+ [a-zA-Zа-яА-Я]+( [a-zA-Zа-яА-Я]+)?$/;
 let UNDERSCOREREGEX = /^[^_]*$/;
 let EMAILREGEXP = /^.+@[A-Za-z]+\.[A-Za-z]+$/;
-// let EMAILREGEXP = /^[A-Za-z]+@[A-Za-z]+\.[A-Za-z]+$/;
-///[\p{L}]+(\s[\p{L}]+){1,2}$/;
 
 document.addEventListener("DOMContentLoaded", () => {
   let element = document.getElementById("phoneMask");
@@ -26,29 +23,22 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 const eventSource = new EventSource("http://localhost:3001/sse-endpoint");
-// eventSource.onmessage = console.log;
 
 document.addEventListener("DOMContentLoaded", () => {
   let idOfPage = document
     .getElementById("idOfPage")
     .innerHTML.replace(/\s/g, "");
-  console.log("idOfPage", idOfPage);
 
   eventSource.addEventListener("message", (event) => {
     const serializedObject = event.data; // Serialized object string received from the SSE message
     const parsedObject = JSON.parse(serializedObject);
 
-    console.log("Получено новое сообщение:", parsedObject[idOfPage]);
-    // получить таблицу
     if (parsedObject[idOfPage] == 1) {
-      // location.reload();
       axios
         .post("http://localhost:3001/sse-endpoint", {
           hash: idOfPage,
         })
         .then(function (response) {
-          console.log(response);
-          console.log("interestion interrestion 1");
           location.reload();
         })
         .catch(function (error) {
@@ -56,11 +46,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
   });
-  eventSource.addEventListener("open", () => {
-    // console.log("Соединение установлено");
-  });
   eventSource.addEventListener("error", (event) => {
-    // console.error("Ошибка соединения:", event);
+    console.error("Ошибка соединения:", event);
   });
 });
 
@@ -73,9 +60,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let target = event.target; // где был клик?
     globalTarget = event.target;
-    // console.log("1.0 - ", event);
-    // console.log("1.1 - ATTRIBUTES", target.attributes.id.value);
-    // console.log(Object.values(target.attributes).includes("id"));
 
     if (
       target.tagName == "DIV" &&
@@ -93,7 +77,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function main() {
     document.querySelector(".btnPhoneModal").removeEventListener("click", main);
-    // console.log(globalTarget);
     let target = globalTarget;
     let id_lesson = target.attributes.id.value;
     let id_tp_lesson = target.attributes.id_tp_lesson.value;
@@ -103,15 +86,12 @@ document.addEventListener("DOMContentLoaded", () => {
     let dtTdTS = new Date(dtTd).getTime();
     let strTeacher = target.attributes.strteacher.value;
     let tp_lesson = target.attributes.tp_lesson.value;
-
     let phone = document.querySelector(".i-1").value;
 
-    // console.log("     2.1 - ", strDt, "  before axios "); // newStrDt,
-    patternPhone = /^\+7\([0-9]{3}\)[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/;
+    let patternPhone = /^\+7\([0-9]{3}\)[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/;
 
     if (patternPhone.test(phone)) {
       closeModal("phoneModal");
-      // console.log("     2.2 - ", strDt, "  before axios ");
 
       // Axios: поиск в базе клиента по номеру телефона,
       // output = s.dt_begin, s.dt_end, s.amount, c.full_name, c.id, c.phone
@@ -122,12 +102,9 @@ document.addEventListener("DOMContentLoaded", () => {
           },
         })
         .then(function (response) {
-          // console.log("     2.3 - ", strDt, "  after axios ");
-          // console.log("response data length = ", response.data);
-
           // Клиента с введенным номером телефона не существует
           if (response.data == -1) {
-            // Registration -----------------------
+            // Registration
             openModal("registrationModal");
             registrationLogic(
               strDt,
@@ -138,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
               dtTd
             );
           } else {
-            // BOOK ---------------------------------------
+            // BOOK
             // Если
             // 1. На абонементе больше нуля занятий
             // 2. Срок действия абонемента валиден на день занятия
@@ -172,18 +149,14 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
               // Абонемент недействителен
               openModal("buySubscrition");
-              // console.log(dtTdTS <= dt_endTS, dtTdTS >= dt_beginTS, amount > 0);
               let problemSpan = document.getElementById("problem");
 
               if (!(dtTdTS >= dt_beginTS)) {
                 problemSpan.innerHTML =
                   "Ваш абонемент ещё не начал действовать";
-                // console.log("Абонемент ещё не начал действовать");
               } else if (!(dtTdTS <= dt_endTS)) {
-                // console.log("Срок действия истек");
                 problemSpan.innerHTML = "Cрок действия Вашего абонемента истек";
               } else if (amount <= 0) {
-                // console.log("Количество занятий закончилось");
                 problemSpan.innerHTML =
                   "Количество занятий на Вашем абонементе закончилось";
               }
@@ -205,12 +178,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     },
                   })
                   .then(function (resp) {
-                    // console.log("кто-то купил абонемент");
-                    // console.log("resp data", resp.data);
                     dt_begin = new Date(resp.data.dt_begin);
                     dt_end = new Date(resp.data.dt_end);
                     amount = +resp.data.amount;
-                    console.log("MS amount", amount);
 
                     closeModal("buySubscrition");
 
@@ -235,7 +205,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 .querySelector(".subscriptionModal")
                 .addEventListener("click", subscrib);
             }
-            // console.log('sec', lessonModal)
           }
         })
         .catch(function (error) {
@@ -252,11 +221,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.querySelectorAll("#btnСlose").forEach(function (el) {
     el.addEventListener("click", (event) => {
-      console.log("close");
       let target = event.target;
-      // console.log(event.target);
       let closestModel = target.closest(".modal");
-      console.log(closestModel.id);
       if (target.classList.value.includes("clearBook")) {
         document.getElementById("bookLesson").innerHTML = "";
       }
@@ -271,8 +237,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// Создать эффект, чтобы занятие парило над таблицей
-// (удалить border-bottom у всех элементов, которые заходят на границу времени
+// Создать эффект, чтобы занятие было над таблицей
+// (удалить border-bottom у всех элементов, которые заходят на границу времени)
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll("[delborder='true']").forEach(function (el) {
     el.parentElement.style.borderBottom = "0px";
@@ -315,19 +281,17 @@ function registrationLogic(
     /* Валидация
      * 1. Введено ли ФИО
      * 2. Дата рождения
-     * 3. TODO: Серия и номер паспорта
-     * 4. TODO: email
+     * 3. Серия и номер паспорта
+     * 4. email
      * 5. Согласие на обработку
      */
 
     if (FULLNAMEREGEX.test(fullNameInput.value)) {
       fullNameInput.classList.remove("is-invalid");
       checksWerePassed = checksWerePassed == false ? false : true;
-      // console.log("Stage 1 - yes", checksWerePassed);
     } else {
       fullNameInput.classList.add("is-invalid");
       checksWerePassed = false;
-      // console.log("Stage 1 - no", checksWerePassed);
     }
 
     if (UNDERSCOREREGEX.test(dtBirth.value)) {
@@ -357,11 +321,9 @@ function registrationLogic(
     if (agreementCheckBox.checked !== false) {
       agreementCheckBox.classList.remove("is-invalid");
       checksWerePassed = checksWerePassed == false ? false : true;
-      // console.log("Stage 2 - yes", checksWerePassed);
     } else {
       agreementCheckBox.classList.add("is-invalid");
       checksWerePassed = false;
-      // console.log("Stage 2 - no", checksWerePassed);
     }
 
     let formDataUniqueKeys = new Set(formDataKeys);
@@ -379,13 +341,12 @@ function registrationLogic(
           },
         })
         .then(function (resp) {
-          // console.log("respresp", resp.data);
           closeModal("registrationModal");
 
           let id = resp.data.id;
           let name = resp.data.name;
 
-          // Подтверждение пробного занятия --------------------------------------
+          // Подтверждение пробного занятия
           openModal("firstLessonModal");
           let divClient = document.getElementById("clientNameFirstLesson");
           divClient.innerHTML = name;
@@ -410,7 +371,6 @@ function registrationLogic(
                   id_client: id,
                   id_lesson: +id_lesson,
                   timeLesson: dtTd,
-                  // ########
                 },
               })
               .then(function (response) {
@@ -419,7 +379,6 @@ function registrationLogic(
 
                 let spanClient = document.getElementById("clientNameWaiting");
                 spanClient.innerHTML = name;
-                // console.log("everything there", spanClient, name);
 
                 document.querySelector(".btnWaitingYouModal").onclick =
                   function (event) {
@@ -430,7 +389,7 @@ function registrationLogic(
           };
         });
     } else {
-      console.log("NOT AXIOS");
+      console.log("error");
     }
   };
 }
@@ -451,7 +410,6 @@ function openModal(id) {
 
 function closeModal(id) {
   flag = 0;
-  // console.log("CLOSE MODAL");
   const modal = document.getElementById(id);
   while (
     document.querySelector(".container").nextSibling.id == "delMeToClose"
@@ -479,11 +437,8 @@ function bookLogic(
   amount,
   clientName
 ) {
-  // console.log("     2.4 - ", strDt, "  in else");
-  // console.log("data response 1", response.data);
   if (flag == 0) {
     flag = 1;
-    console.log("Open Model");
     openModal("lessonModal");
 
     document.getElementById(
@@ -517,15 +472,11 @@ function bookLogic(
     let spanTeacher = document.getElementById("teacher");
     spanTeacher.innerHTML = `${strTeacher}`;
 
-    // console.log(tp_lesson, strDt, strTime, strTeacher);
     document
       .querySelector(".btnBookModal")
       .addEventListener("click", bookModal);
 
-    console.log("herere");
-
     function bookModal() {
-      console.log("not first book in your life ");
       let trialLesson = false;
       document
         .querySelector(".btnBookModal")
@@ -542,7 +493,6 @@ function bookLogic(
           },
         })
         .then(function (resp) {
-          // console.log("resp after booking lesson", resp);
           closeModal("lessonModal");
           openModal("waitingYouModal");
           let spanClient = document.getElementById("clientNameWaiting");
@@ -566,10 +516,10 @@ function bookLogic(
 (function () {
   "use strict";
 
-  // Получите все формы, к которым мы хотим применить пользовательские стили проверки Bootstrap
+  // все формы, к которым мы хотим применить пользовательские стили проверки Bootstrap
   var forms = document.querySelectorAll(".needs-validation");
 
-  // Зацикливайтесь на них и предотвращайте отправку
+  // предотвращение отправки
   Array.prototype.slice.call(forms).forEach(function (form) {
     form.addEventListener(
       "submit",

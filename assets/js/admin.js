@@ -1,10 +1,7 @@
-// const { default: axios, Axios } = require("axios");
-
 function masks() {
   let elements = document.querySelectorAll(".timeMask");
   let maskOptions = {
     mask: "#&:1*",
-    // mask: /^([1][0-9]|[2][0-4]):[0-5][0-9]$/,
     lazy: false,
     definitions: {
       // <any single char>: <same type as mask (RegExp, Function, etc.)>
@@ -21,7 +18,6 @@ function masks() {
   });
 }
 
-// let TIMEREGEX = /^(?:[01]\d|2[0-3]):[0-5]\d$/;
 let TIMEREGEX = /^([0-1][0-9]|2[0-3]):(00|15|30|45)$/;
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -33,11 +29,8 @@ function addTeachers(whereAddTeachers, whereTakeTpLesson) {
   var teacherSelect = document.querySelector(`.${whereAddTeachers}`);
   var selectedOption = tpLessonsSelect.value;
 
-  console.log("Add teachers have just got", tpLessonsSelect, teacherSelect);
-
   teacherSelect.innerHTML = '<option value="" disabled>Преподаватель</option>';
 
-  console.log("before axios");
   axios
     .get("http://localhost:3001/teachers", {
       params: {
@@ -46,7 +39,6 @@ function addTeachers(whereAddTeachers, whereTakeTpLesson) {
     })
     .then(function (response) {
       let teachersIdName = response.data;
-      console.log("teacher", teachersIdName);
 
       for (let i = 0; i < teachersIdName.length; i++) {
         var option = document.createElement("option");
@@ -56,11 +48,8 @@ function addTeachers(whereAddTeachers, whereTakeTpLesson) {
       }
     })
     .catch(function (error) {
-      console.log("error", error);
+      console.log(error);
     });
-  // .finally(function () {
-  //   // always executed
-  // });
 
   // enable teachers select
   teacherSelect.disabled = false;
@@ -95,7 +84,6 @@ document.addEventListener("DOMContentLoaded", () => {
           : allBtn[6].children[0];
 
       pressedBtn.setAttribute("checked", "");
-      // pressedBtn.setAttribute("disabled", ""); // todo: разобраться что с кнопкой
 
       document.querySelector(
         ".timeForFirstRep"
@@ -104,10 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
       let weekDays = document.querySelector(".weekDays");
 
       weekDays.onclick = function (event) {
-        // console.log("event", event);
-
         // на какую кнопку нажал
-        // console.log();
         let clickedBtnOuterText = event.srcElement.nextElementSibling.outerText;
         if (event.target.localName == "input") {
           if (event.target.checked == true) {
@@ -146,14 +131,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             addDiv.appendChild(newDiv);
 
-            // newDiv.innerHTML = `
-            // <div class="col-lg-2">По <span style="color: #AB9384; class="forDelete">${
-            //   daysOfWeek[event.target.value]
-            // }</span> в</div>
-            // <div class="col-lg-3">
-            //   <input type="text" name="timeOfDay[]" class="form-control timeMask">
-            // </div>
-            // `;
             document.querySelector(".addWeekDaysTime").appendChild(newDiv);
             masks();
           } else {
@@ -167,8 +144,6 @@ document.addEventListener("DOMContentLoaded", () => {
             childrenIdxWithoutFirst.forEach((key) => {
               let currentRow = deleteDiv[0].children[key];
               let currentRowText = currentRow.outerText.slice(3, 5);
-              // let clickedBtnOuterText = event.srcElement.nextElementSibling.outerText;
-
               if (currentRowText == clickedBtnOuterText) {
                 currentRow.remove();
               }
@@ -189,22 +164,13 @@ document.addEventListener("DOMContentLoaded", () => {
     let hallSelect = document.getElementById("hall");
     let tpLessonSelect = document.getElementById("tpLessons");
     let dtStartInput = document.querySelectorAll("#dt_start");
-    console.log(dtStartInput);
     let formDateKeys = [];
     let formDateUniqueKeys = new Set();
-    console.log(
-      "-----------------------------------------------------------------"
-    );
-    console.log("Stage 1", "checkhallSelect");
 
     inputForTime.forEach((el, idx) => {
-      console.log("Stage 2", "index = ", idx);
       spanInnerHtml.push(
         el.parentElement.previousElementSibling.children[0].innerHTML
       );
-      console.log("current value", el.value);
-
-      console.log("Stage 3. Hall ", hallSelect !== "Зал", hallSelect.value);
 
       /*
       проверка на валидность:
@@ -217,52 +183,39 @@ document.addEventListener("DOMContentLoaded", () => {
       if (tpLessonSelect.value !== "Тип занятия") {
         tpLessonSelect.classList.remove("is-invalid");
         checksWerePassed = checksWerePassed == false ? false : true;
-        console.log("Stage 33 tp yes", checksWerePassed);
       } else {
         tpLessonSelect.classList.add("is-invalid");
         checksWerePassed = false;
-        console.log("Stage 33 tp no", checksWerePassed);
       }
 
       if (hallSelect.value !== "Зал") {
         hallSelect.classList.remove("is-invalid");
         checksWerePassed = checksWerePassed == false ? false : true;
-        console.log("Stage 3.1 yes", checksWerePassed);
       } else {
         hallSelect.classList.add("is-invalid");
         checksWerePassed = false;
-        console.log("Stage 3.1 not", checksWerePassed);
       }
 
       if (TIMEREGEX.test(el.value)) {
         inputForTime[idx].classList.remove("is-invalid");
-        // let amoutOfLessons = document.getElementById("reAmount").value;
         for (const key of formDate.keys()) {
           formDateKeys.push(key);
         }
 
         formDateUniqueKeys = new Set(formDateKeys);
-        console.log(
-          "Unique form date keys one",
-          formDateUniqueKeys,
-          formDateUniqueKeys.size
-        );
         checksWerePassed = checksWerePassed == false ? false : true;
       } else {
-        // console.log("Stage 4.1 no");
         inputForTime[idx].classList.add("is-invalid");
         checksWerePassed = false;
       }
     });
 
     if (checksWerePassed == true && formDateUniqueKeys.size == 8) {
-      console.log("I make axios ");
       let spanInnerHtmlNumbers = []; // рельное расположение инпутов под кнопки
       spanInnerHtml.forEach(function (el) {
         spanInnerHtmlNumbers.push(daysOfWeekShort.indexOf(el));
       });
       formDate.append("spanInnerHtmlNumbers", spanInnerHtmlNumbers);
-      console.log(spanInnerHtml);
       // аксиос
       axios
         .patch("http://localhost:3001/api/lessons", formDate, {
@@ -272,30 +225,11 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .then(function (resp) {
           location.replace(location.href);
-          console.log("respresp", resp);
-          if (resp.data == "-1") {
-            console.log("TOTAL ERROR");
-          }
         });
     } else {
-      console.log("NOT AXIOS");
+      console.log("error");
     }
   };
-
-  // document.querySelector(".btnAddTeacher").onclick = function (event) {
-  //   const form = document.querySelector("#addTeacherForm");
-  //   const formDate = new FormData(form);
-  //   console.log("hereeeee", formDate);
-  //   axios
-  //     .patch("http://localhost:3001/api/teachers", formDate, {
-  //       headers: {
-  //         "Content-Type": "multipart/form-date",
-  //       },
-  //     })
-  //     .then(function (resp) {
-  //       console.log("Я добавил");
-  //     });
-  // };
 });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -303,31 +237,11 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .querySelectorAll("#btnDayOfWeek")
     .forEach((el) => el.addEventListener("click", countCheckedButtons));
-
-  // document.querySelector(".btnAdminAdd").onclick = function (event) {
-  //   // console.log("im here");
-  //   const form = document.querySelector("form");
-  //   // console.log("form 333", form);
-  //   const formDate = new FormData(form);
-  //   // const queryString = new URLSearchParams(data1).toString();
-  //   // console.log("query string", queryString);
-  //   // console.log("form for rest", data.get("hall"));
-  //   axios
-  //     .patch("http://localhost:3001/api/lessons", formDate, {
-  //       headers: {
-  //         "Content-Type": "multipart/form-date",
-  //       },
-  //     })
-  //     .then(function (resp) {
-  //       // console.log("999");
-  //     });
-  // };
 });
 
 // Update lesson
 document.addEventListener("DOMContentLoaded", () => {
   let table = document.querySelectorAll(".table");
-  // console.log(document.querySelectorAll(".btn-close"));
   let clickedIdForDel = -1;
   let targetIdForDel = -1;
   let rowForUpd = -1;
@@ -339,7 +253,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let confirmationDeleteModelBody = document.getElementById(
       "confirmationDeleteModelBody"
     );
-    console.log("confirm that thai", confirmationDeleteModelBody);
 
     if (target.classList.value === "btn-close") {
       let TeacherOfClickedLesson =
@@ -348,9 +261,7 @@ document.addEventListener("DOMContentLoaded", () => {
       let timeOfClickedLesson =
         target.parentElement.previousElementSibling.previousElementSibling
           .previousElementSibling.previousElementSibling.innerHTML;
-      // console.log("timeOfClickedLesson", timeOfClickedLesson);
       let timeOfClickedLessonArr = timeOfClickedLesson.split(" "); // example: ['', '17', 'апр', '13:00', '']
-      // console.log("timeOfClickedLessonArr", timeOfClickedLessonArr);
 
       openModal("confirmation");
       confirmationDeleteModelBody.children[0].innerHTML +=
@@ -363,13 +274,13 @@ document.addEventListener("DOMContentLoaded", () => {
         ", которое ведет " +
         TeacherOfClickedLesson +
         "?";
-      // paragraph.appendChild(text);
       clickedIdForDel =
         +target.parentElement.previousElementSibling.previousElementSibling
           .previousElementSibling.previousElementSibling.previousElementSibling
           .innerHTML;
     } else if (target.classList.length == 1) {
-      /* regular cells have one class (cell)
+      /*
+       * regular cells have one class (cell)
        * header cells have two classes (cell, title)
        */
       rowForUpd = target.parentElement;
@@ -380,25 +291,8 @@ document.addEventListener("DOMContentLoaded", () => {
       let rowForUpdTpLesson = target.parentElement.children[3].innerHTML;
       let rowForUpdTeacher = target.parentElement.children[4].innerHTML;
 
-      console.log(
-        "TARGETTTT",
-        target.parentElement.attributes[1].value,
-        target.parentElement.attributes[2].value,
-        rowForUpd
-      );
-      console.log(
-        rowForUpdId,
-        rowForUpdDt,
-        rowForUpdHall,
-        rowForUpdTpLesson,
-        rowForUpdTeacher
-      );
       openModal("updateLesson");
-      // console.log(
-      //   ".............",
-      //   document.querySelectorAll("#updateLesson")[0].children[0].children[0]
-      //     .children[1]
-      // );
+
       document.getElementById("idLessonTime").value = rowForUpdTime;
       document.getElementById("lessonDt").value = rowForUpdDt;
 
@@ -414,19 +308,15 @@ document.addEventListener("DOMContentLoaded", () => {
       idLesson.value = +rowForUpdId;
       let lessonDt = document.getElementById("lessonDt");
       let rowForUpdDtArr = rowForUpdDt.split(" ");
-      console.log("row for upd ", rowForUpdDtArr);
-
       let selectedOption = rowForUpdTpLesson;
-      console.log(rowForUpdTpLesson);
+
       axios
         .get("http://localhost:3001/teachers", {
           params: {
             tp_lesson: selectedOption,
           },
         })
-        .then(function (response) {
-          console.log("resp data", response.data);
-        })
+        .then(function (response) {})
         .catch(function (error) {
           console.log(error);
         });
@@ -435,16 +325,10 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .getElementById("btnDelLessonAfterConfirmation")
     .addEventListener("click", (eventDel) => {
-      console.log("eventDel", eventDel);
-
-      console.log("clickedIdForDel", clickedIdForDel);
-      console.log("Сейчас полетит аксиос", clickedIdForDel);
-
       axios
         .delete("http://localhost:3001/api/lessons", {
           data: { id: clickedIdForDel },
         })
-        // .delete("http://localhost:3001/api/lessons", { date: "helloVera!!!" })
         .then(function (resp) {
           confirmationDeleteModelBody.children[0].innerHTML =
             "Вы уверены, что хотите удалить занятие ";
@@ -460,7 +344,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .getElementById("updateLessonBtn")
     .addEventListener("click", (eventUpd) => {
-      console.log("eventUpd", eventUpd);
       let checksWerePassed = true;
 
       // Check
@@ -468,7 +351,6 @@ document.addEventListener("DOMContentLoaded", () => {
       // 2. tp lesson
 
       let timeFromInput = document.getElementById("idLessonTime");
-      console.log(timeFromInput.value);
       if (TIMEREGEX.test(timeFromInput.value)) {
         timeFromInput.classList.remove("is-invalid");
         checksWerePassed = checksWerePassed == false ? false : true;
@@ -478,7 +360,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       let tpLessonInput = document.getElementById("idTpLesson");
-      console.log(tpLessonInput.value, tpLessonInput.value == "_____");
       if (tpLessonInput.value !== "_____") {
         tpLessonInput.classList.remove("is-invalid");
         checksWerePassed = checksWerePassed == false ? false : true;
@@ -495,18 +376,9 @@ document.addEventListener("DOMContentLoaded", () => {
               "Content-Type": "multipart/form-date",
             },
           })
-          // .delete("http://localhost:3001/api/lessons", { date: "helloVera!!!" })
           .then(function (resp) {
-            console.log("прилетело", resp.data);
             closeModal("updateLesson");
-            location.replace(location.href); // ----------
-
-            // rowForUpd.children[0].innerHTML;
-
-            // confirmationDeleteModelBody.children[0].innerHTML =
-            //   "Вы уверены, что хотите удалить занятие ";
-            // closeModal("confirmation");
-            // targetIdForDel.remove();
+            location.replace(location.href);
           })
           .catch(function (error) {
             console.log(error);
@@ -518,13 +390,8 @@ document.addEventListener("DOMContentLoaded", () => {
 // удалить модальное окно после нажатия на кнопки "Отмена" или крестик
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll("#btnСlose").forEach(function (el) {
-    // console.log(el);
     el.addEventListener("click", (eventClose) => {
       let target = eventClose.target;
-      // console.log("1 - Closed clicked", eventClose);
-      // console.log("2 - el", el);
-      // console.log("-------------------------------------");
-      // console.log(target);
       confirmationDeleteModelBody.children[0].innerHTML =
         "Вы уверены, что хотите удалить занятие ";
       let closestModel = target.closest(".modal");
@@ -573,9 +440,6 @@ function openModal(id) {
   div.classList.add("modal-backdrop");
   div.classList.add("fade");
   div.classList.add("show");
-  // mainContainer.appendChild(p);
-  // input.classList.add("form-control");
-  // input.classList.add("timeMask");
   mainContainer.append(div);
 }
 
@@ -588,23 +452,3 @@ function closeModal(id) {
     .querySelector(".modal-backdrop")
     .classList.remove("modal-backdrop", "fade", "show");
 }
-
-// const getDatePickerTitle = (elem) => {
-//   // From the label or the aria-label
-//   const label = elem.nextElementSibling;
-//   let titleText = "";
-//   if (label && label.tagName === "LABEL") {
-//     titleText = label.textContent;
-//   } else {
-//     titleText = elem.getAttribute("aria-label") || "";
-//   }
-//   return titleText;
-// };
-
-// const elems = document.querySelectorAll(".datepicker_input");
-// for (const elem of elems) {
-//   const datepicker = new Datepicker(elem, {
-//     format: "dd/mm/yyyy", // RU format
-//     title: getDatePickerTitle(elem),
-//   });
-// }

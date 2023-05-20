@@ -3,28 +3,19 @@
 
 <head>
   <%- include('../partials/head'); %>
+
   <style>
-  .input-group-append {
-    cursor: pointer;
-  }
-  
-  .btnDay {
-    border-radius: 50%;
-    width: 80%;
-    height: 100%;
-  }
-
-
-
-
-  
-  /* .btn-check:checked {
-    outline: none !important;
-    box-shadow: none;
-    color:red!important;
-} */
-
+    .input-group-append {
+      cursor: pointer;
+    }
+    
+    .btnDay {
+      border-radius: 50%;
+      width: 80%;
+      height: 100%;
+    }
   </style>
+
   <link rel="stylesheet" href="css/admin.css">
   <script src="./js/admin.js"></script>
 </head>
@@ -97,7 +88,6 @@
           </div>
           
           <div class="p-3"></div>
-          <%# style="height: 2rem;" %>
           <div class="row weekDays" >
             
             <%/* all buttons */ %>
@@ -109,7 +99,6 @@
 
               </div>
             <%}%>
-            <%# <div class="p-3"></div> %>
           </div>
           
           
@@ -128,14 +117,6 @@
                   <input type="text" name="timeOfDay[]" class="form-control timeMask" id="timeOnDayOfTheWeek" disabled >
                 </div>  
               </div>  
-              <%/*
-              <div class="row pt-2">
-                <div class="col-lg-2">По <span style="color: #AB9384	;">ВТ</span> в</div>
-                <div class="col-lg-3">
-                  <input type="text" name="timeOfDay[]" class="form-control timeMask" >
-                </div>  
-              </div> 
-               */%> 
             </div>     
           </div>
           
@@ -200,24 +181,9 @@
           <% }); %>   
         </div>
       </div>
-
-      <%/*
-      <div class="pt-4"></div>
-      <h2>Добавить нового преподавателя</h2>
-      <div class="p-2"></div>
-      <form class="col-12" id="addTeacherForm" onsubmit="return false;">
-        <div class="col-6">
-          <input type="file" name="myPicture" class="file">
-          <button type="submit" class="btn btn-primary btnAddTeacher">добавить</button>
-        </div>
-      </form>
-      */%>
-        <!-- элемент input с id = datetimepicker1 -->
-
   </main>
   
   <%/* Modal for DELETE */ %>
-
   <div class="modal fade" tabindex="-1" id="confirmation" aria-hidden="true"
       aria-labelledby="your_number">
     <div class="modal-dialog modal-dialog-centered">
@@ -252,8 +218,6 @@
           </h5>
           <button type="button" class="btn-close" id="btnСlose" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-
-
 
         <form class="col-12" id='updateLessonForm' onsubmit="return false;">
           <div class="modal-body ms-3 me-3" id="updateLessonModalBody">
