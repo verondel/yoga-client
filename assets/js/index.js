@@ -40,8 +40,18 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("Получено новое сообщение:", parsedObject[idOfPage]);
     // получить таблицу
     if (parsedObject[idOfPage] == 1) {
-      location.replace(location.href);
       // location.reload();
+      axios
+        .post("http://localhost:3001/sse-endpoint", {
+          hash: idOfPage,
+        })
+        .then(function (response) {
+          console.log(response);
+          location.replace(location.href);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     }
   });
   eventSource.addEventListener("open", () => {
