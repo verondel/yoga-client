@@ -1,7 +1,8 @@
 // const { default: axios } = require("axios");
 let FULLNAMEREGEX = /^[a-zA-Zа-яА-Я]+ [a-zA-Zа-яА-Я]+( [a-zA-Zа-яА-Я]+)?$/;
 let UNDERSCOREREGEX = /^[^_]*$/;
-let EMAILREGEXP = /^[A-Za-z]+@[A-Za-z]+\.[A-Za-z]+$/;
+let EMAILREGEXP = /^.+@[A-Za-z]+\.[A-Za-z]+$/;
+// let EMAILREGEXP = /^[A-Za-z]+@[A-Za-z]+\.[A-Za-z]+$/;
 ///[\p{L}]+(\s[\p{L}]+){1,2}$/;
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -47,7 +48,8 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .then(function (response) {
           console.log(response);
-          location.replace(location.href);
+          console.log("interestion interrestion 1");
+          location.reload();
         })
         .catch(function (error) {
           console.log(error);
@@ -191,6 +193,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 const formData = new FormData(form);
                 formData.append("id_client", id_client);
                 formData.append("dtLesson", dtTd);
+                document
+                  .querySelector(".subscriptionModal")
+                  .removeEventListener("click", subscrib);
 
                 // axios output: dt_begin, dt_end, amount
                 axios
@@ -201,15 +206,13 @@ document.addEventListener("DOMContentLoaded", () => {
                   })
                   .then(function (resp) {
                     // console.log("кто-то купил абонемент");
-                    closeModal("buySubscrition");
                     // console.log("resp data", resp.data);
                     dt_begin = new Date(resp.data.dt_begin);
                     dt_end = new Date(resp.data.dt_end);
                     amount = +resp.data.amount;
-                    // console.log("MS amount", amount);
-                    document
-                      .querySelector(".subscriptionModal")
-                      .removeEventListener("click", subscrib);
+                    console.log("MS amount", amount);
+
+                    closeModal("buySubscrition");
 
                     bookLogic(
                       flag,
@@ -249,10 +252,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.querySelectorAll("#btnСlose").forEach(function (el) {
     el.addEventListener("click", (event) => {
+      console.log("close");
       let target = event.target;
+      // console.log(event.target);
       let closestModel = target.closest(".modal");
+      console.log(closestModel.id);
       if (target.classList.value.includes("clearBook")) {
         document.getElementById("bookLesson").innerHTML = "";
+      }
+      if (
+        closestModel.id == "buySubscrition" ||
+        closestModel.id == "waitingYouModal"
+      ) {
+        location.replace(location.href);
       }
       closeModal(closestModel.id);
     });
@@ -428,8 +440,6 @@ function openModal(id) {
   modal.classList.toggle("show");
   modal.style.display = "block";
   document.body.classList.add("modal-open");
-  // let newDiv = document.createElement("div");
-  // newDiv.classList.add("modal-backdrop", "fade", "show");
   document
     .querySelector(".container")
     .insertAdjacentHTML(
@@ -473,8 +483,9 @@ function bookLogic(
   // console.log("data response 1", response.data);
   if (flag == 0) {
     flag = 1;
-    // console.log("Open Model");
+    console.log("Open Model");
     openModal("lessonModal");
+
     document.getElementById(
       "staticPhoneInLesson"
     ).value = `${response.data[0].phone}`;
@@ -510,6 +521,8 @@ function bookLogic(
     document
       .querySelector(".btnBookModal")
       .addEventListener("click", bookModal);
+
+    console.log("herere");
 
     function bookModal() {
       console.log("not first book in your life ");
