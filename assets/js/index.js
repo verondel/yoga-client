@@ -34,16 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const parsedObject = JSON.parse(serializedObject);
 
     if (parsedObject[idOfPage] == 1) {
-      axios
-        .post("http://localhost:3001/sse-endpoint", {
-          hash: idOfPage,
-        })
-        .then(function (response) {
-          location.reload();
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      location.replace(location.href);
     }
   });
   eventSource.addEventListener("error", (event) => {

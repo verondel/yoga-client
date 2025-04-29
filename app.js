@@ -77,8 +77,7 @@ app.get("/", (req, res) => {
         daysOfWeekShort: DAYSOFWEEKSHORT,
         daysOfWeekLong: DAYSOFWEEKLONG,
         hoursForTable: hoursForTable,
-        counter: counter,
-        hash: resp.data.hash,
+        counter: counter
       });
     })
     .catch(function (error) {
