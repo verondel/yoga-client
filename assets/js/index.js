@@ -22,25 +22,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let mask = new IMask(element, maskOptions);
 });
 
-const eventSource = new EventSource("http://localhost:3001/sse-endpoint");
-
-document.addEventListener("DOMContentLoaded", () => {
-  let idOfPage = document
-    .getElementById("idOfPage")
-    .innerHTML.replace(/\s/g, "");
-
-  eventSource.addEventListener("message", (event) => {
-    const serializedObject = event.data; // Serialized object string received from the SSE message
-    const parsedObject = JSON.parse(serializedObject);
-
-    if (parsedObject[idOfPage] == 1) {
-      location.replace(location.href);
-    }
-  });
-  eventSource.addEventListener("error", (event) => {
-    console.error("Ошибка соединения:", event);
-  });
-});
 
 document.addEventListener("DOMContentLoaded", () => {
   let flag = 0;
@@ -87,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Axios: поиск в базе клиента по номеру телефона,
       // output = s.dt_begin, s.dt_end, s.amount, c.full_name, c.id, c.phone
       axios
-        .get("http://localhost:3001/attempt", {
+        .get(`http://${rest_url}:3001/attempt`, {
           params: {
             phone: phone,
           },
@@ -163,7 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 // axios output: dt_begin, dt_end, amount
                 axios
-                  .patch("http://localhost:3001/api/subsctiption", formData, {
+                  .patch(`http://${rest_url}:3001/api/subsctiption`, formData, {
                     headers: {
                       "Content-Type": "multipart/form-date",
                     },
@@ -326,7 +307,7 @@ function registrationLogic(
     if (checksWerePassed == true) {
       console.log("AXIOS FOR REGISTRATION");
       axios
-        .patch("http://localhost:3001/api/registration", formData, {
+        .patch(`http://${rest_url}:3001/api/registration`, formData, {
           headers: {
             "Content-Type": "multipart/form-date",
           },
@@ -356,7 +337,7 @@ function registrationLogic(
           ) {
             // add subscribtion, add book for TRIAL LESSON
             axios
-              .patch("http://localhost:3001/api/book", {
+              .patch(`http://${rest_url}:3001/api/book`, {
                 data: {
                   trialLesson: true,
                   id_client: id,
@@ -473,7 +454,7 @@ function bookLogic(
         .querySelector(".btnBookModal")
         .removeEventListener("click", bookModal);
       axios
-        .patch("http://localhost:3001/api/book", {
+        .patch(`http://${rest_url}:3001/api/book`, {
           data: {
             trialLesson: trialLesson,
             id_client: id_client,

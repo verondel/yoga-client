@@ -19,6 +19,7 @@ function masks() {
 }
 
 let TIMEREGEX = /^([0-1][0-9]|2[0-3]):(00|15|30|45)$/;
+// rest_ip мудро импортнули в admin.ejs
 
 document.addEventListener("DOMContentLoaded", () => {
   masks();
@@ -30,9 +31,9 @@ function addTeachers(whereAddTeachers, whereTakeTpLesson) {
   var selectedOption = tpLessonsSelect.value;
 
   teacherSelect.innerHTML = '<option value="" disabled>Преподаватель</option>';
-
+  // const PRIVATE_IP_DB = process.env.PRIVATE_IP_DB
   axios
-    .get("http://localhost:3001/teachers", {
+    .get(`http://${rest_url}:3001/teachers`, {
       params: {
         tp_lesson: selectedOption,
       },
@@ -218,7 +219,7 @@ document.addEventListener("DOMContentLoaded", () => {
       formDate.append("spanInnerHtmlNumbers", spanInnerHtmlNumbers);
       // аксиос
       axios
-        .patch("http://localhost:3001/api/lessons", formDate, {
+        .patch(`http://${rest_url}:3001/api/lessons`, formDate, {
           headers: {
             "Content-Type": "multipart/form-date",
           },
@@ -311,7 +312,7 @@ document.addEventListener("DOMContentLoaded", () => {
       let selectedOption = rowForUpdTpLesson;
 
       axios
-        .get("http://localhost:3001/teachers", {
+        .get(`http://${rest_url}:3001/teachers`, {
           params: {
             tp_lesson: selectedOption,
           },
@@ -326,7 +327,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .getElementById("btnDelLessonAfterConfirmation")
     .addEventListener("click", (eventDel) => {
       axios
-        .delete("http://localhost:3001/api/lessons", {
+        .delete(`http://${rest_url}:3001/api/lessons`, {
           data: { id: clickedIdForDel },
         })
         .then(function (resp) {
@@ -371,7 +372,7 @@ document.addEventListener("DOMContentLoaded", () => {
       let formDate = new FormData(document.getElementById("updateLessonForm"));
       if (checksWerePassed == true) {
         axios
-          .post("http://localhost:3001/api/lessons", formDate, {
+          .post(`http://${rest_url}:3001/api/lessons`, formDate, {
             headers: {
               "Content-Type": "multipart/form-date",
             },

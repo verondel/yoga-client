@@ -4,6 +4,8 @@ const CryptoJS = require("crypto-js");
 
 const app = express();
 const port = 3000;
+const rest_url = "rest:3001";
+
 app.use(express.static("assets")); // Статическая папка !!!!
 
 // Parse URL-encoded bodies (as sent by HTML forms)
@@ -19,7 +21,7 @@ app.use(cookierParser("abcdef-12345"));
 
 app.get("/users", (req, res) => {
   axios
-    .get("http://localhost:3001/users", {
+    .get(`http://${rest_url}/users`, {
       params: {
         ID: 123,
       },
@@ -45,7 +47,7 @@ const DAYSOFWEEKLONG = [
 
 app.get("/", (req, res) => {
   axios
-    .get("http://localhost:3001/typesAndLessons", {
+    .get(`http://${rest_url}/typesAndLessons`, {
       params: {
         ID: 123,
       },
@@ -77,7 +79,9 @@ app.get("/", (req, res) => {
         daysOfWeekShort: DAYSOFWEEKSHORT,
         daysOfWeekLong: DAYSOFWEEKLONG,
         hoursForTable: hoursForTable,
-        counter: counter
+        counter: counter,
+        hash: resp.data.hash,
+        rest_ip: process.env.FLOATING_IP_UI
       });
     })
     .catch(function (error) {
@@ -88,14 +92,15 @@ app.get("/", (req, res) => {
 app.get("/login", (req, res) => {
   if (!req.signedCookies.user) {
     // если нет куки, то пускай регистрируется
-    res.render("pages/login");
+    res.render("pages/login", { FLOATING_IP_UI: process.env.FLOATING_IP_UI });
   } else {
     // кука есть, проверяем ее
     if (req.signedCookies.user == "admin") {
-      res.redirect("http://localhost:3000/admin"); // редирект в будущую админку
+      res.redirect(`http://${process.env.FLOATING_IP_UI}:3000/admin`); // редирект в будущую админку ----------
+      // res.render("pages/admin");
     } else {
       // кука просрочена
-      res.render("pages/login");
+      res.render("pages/login", { FLOATING_IP_UI: process.env.FLOATING_IP_UI });
     }
   }
 });
@@ -104,7 +109,8 @@ app.get("/logout", (req, res) => {
   res.cookie("user", "Leopold", {
     signed: true,
   });
-  res.redirect("http://localhost:3000/login");
+  // res.redirect(`http://${process.env.FLOATING_IP_UI}:3000/login`); // ----------
+  res.render("pages/login", { FLOATING_IP_UI: process.env.FLOATING_IP_UI })
 });
 
 app.post("/auth", (req, res) => {
@@ -113,7 +119,7 @@ app.post("/auth", (req, res) => {
   } else {
     if (req.body.login != "" && req.body.password != "") {
       axios
-        .post("http://localhost:3001/auth", {
+        .post(`http://${rest_url}/auth`, {
           params: {
             login: req.body.login,
             password: req.body.password,
@@ -125,12 +131,13 @@ app.post("/auth", (req, res) => {
             res.cookie("user", "admin", {
               signed: true,
             });
-            res.redirect("http://localhost:3000/admin");
+            res.redirect(`http://${process.env.FLOATING_IP_UI}:3000/admin`); //----------
           } else {
             res.cookie("admin", {
               signed: false,
             });
-            res.redirect("http://localhost:3000/login");
+            // res.redirect("http://localhost:3000/login");
+            res.render("pages/login",  { FLOATING_IP_UI: process.env.FLOATING_IP_UI })
           }
         })
 
@@ -144,12 +151,12 @@ app.post("/auth", (req, res) => {
 app.get("/admin", (req, res) => {
   if (!req.signedCookies.user) {
     // если нет куки, то пускай регистрируется
-    res.render("pages/login");
+    res.render("pages/login",  { FLOATING_IP_UI: process.env.FLOATING_IP_UI });
   } else {
     // кука есть, проверяем ее
     if (req.signedCookies.user == "admin") {
       axios
-        .get("http://localhost:3001/infoForNewLesson", {
+        .get(`http://${rest_url}/infoForNewLesson`, {
           params: {
             ID: 123,
           },
@@ -183,6 +190,7 @@ app.get("/admin", (req, res) => {
             daysOfWeekShort: DAYSOFWEEKSHORT,
             tableLessonHeaders: tableLessonHeaders,
             lessons: resp.data.lessons,
+            rest_ip: process.env.FLOATING_IP_UI
           }); // редирект в админку
         })
         .catch(function (error) {
@@ -190,7 +198,7 @@ app.get("/admin", (req, res) => {
         });
     } else {
       // кука просрочена
-      res.render("pages/login");
+      res.render("pages/login", { FLOATING_IP_UI: process.env.FLOATING_IP_UI });
     }
   }
 });
